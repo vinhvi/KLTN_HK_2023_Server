@@ -17,6 +17,7 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String email;
     private String passWordA;
     private boolean enable;
     @ManyToMany(fetch = FetchType.EAGER)

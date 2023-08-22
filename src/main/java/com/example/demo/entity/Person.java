@@ -21,9 +21,7 @@ public abstract class Person {
     private int sex;
     private String phone;
     private String address;
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "image_id")
-    private Image image;
+    private String image;
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "account_id")
     private Account account;
