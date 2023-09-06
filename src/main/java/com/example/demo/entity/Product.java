@@ -16,8 +16,8 @@ import java.util.List;
 public class Product {
     @Id
     private String id;
-
     private String productName;
+    private String brand;
     private String description;
     private Date importDate;
     private int quantity;

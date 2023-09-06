@@ -14,8 +14,19 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class ImageServiceImpl implements ImageService {
     private final ImageRepo imageRepo;
+
     @Override
     public Image addImage(Image image) {
         return imageRepo.save(image);
+    }
+
+    @Override
+    public Boolean remove(Image image) {
+        try {
+            imageRepo.delete(image);
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
     }
 }

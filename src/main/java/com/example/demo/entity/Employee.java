@@ -17,6 +17,4 @@ import java.util.Date;
 @NoArgsConstructor
 public class Employee extends Person{
     private Date workdate;
-
-
 }
