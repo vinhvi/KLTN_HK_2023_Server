@@ -4,5 +4,5 @@ import com.example.demo.entity.ShoppingCartDetail;
 
 public interface ShoppingCartDetailService {
     ShoppingCartDetail saveOrUpDate(ShoppingCartDetail shoppingCartDetail);
-    Boolean remove(ShoppingCartDetail shoppingCartDetail);
+    Boolean remove(int id);
 }

@@ -32,7 +32,7 @@ public class ProductImpl implements ProductService {
 
     @Override
     public List<Product> getByName(String name) {
-        return productRepo.findProductByProductName(name);
+        return productRepo.findProductByProductNameStartsWith(name);
     }
 
     @Override

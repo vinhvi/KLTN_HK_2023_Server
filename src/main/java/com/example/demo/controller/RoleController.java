@@ -24,12 +24,17 @@ public class RoleController {
         return ResponseEntity.ok().body(roleService.getById(id));
     }
 
-    @GetMapping("/getByName")
-    public ResponseEntity<Role> getByName(@RequestParam("name") String name){
-        return ResponseEntity.ok().body(roleService.getByName(name));
+    @GetMapping("/getByName/{name}")
+    public ResponseEntity<?> getByName(@PathVariable("name") String name) {
+        Role role = roleService.getByName(name);
+        if (role == null) {
+            return ResponseEntity.badRequest().body(name + " not found!");
+        }
+        return ResponseEntity.ok().body(role);
     }
+
     @GetMapping("/getList")
-    public ResponseEntity<List<Role>> getAll(){
+    public ResponseEntity<List<Role>> getAll() {
         return ResponseEntity.ok().body(roleService.getAll());
     }
 }

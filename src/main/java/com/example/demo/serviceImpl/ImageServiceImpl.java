@@ -21,8 +21,9 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public Boolean remove(Image image) {
+    public Boolean remove(int id) {
         try {
+            Image image = imageRepo.findImageById(id);
             imageRepo.delete(image);
         } catch (Exception e) {
             return false;

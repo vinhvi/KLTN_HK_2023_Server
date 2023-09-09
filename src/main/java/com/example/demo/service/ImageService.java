@@ -5,6 +5,6 @@ import com.example.demo.entity.Image;
 public interface ImageService {
     Image addImage(Image image);
 
-    Boolean remove(Image image);
+    Boolean remove(int id);
 
 }

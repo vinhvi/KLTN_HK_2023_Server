@@ -21,8 +21,9 @@ public class ShoppingCartDetailImpl implements ShoppingCartDetailService {
     }
 
     @Override
-    public Boolean remove(ShoppingCartDetail shoppingCartDetail) {
+    public Boolean remove(int id) {
         try {
+            ShoppingCartDetail shoppingCartDetail = shoppingCartDetailRepo.findShoppingCartDetailById(id);
             shoppingCartDetailRepo.delete(shoppingCartDetail);
         } catch (Exception e) {
             return false;
