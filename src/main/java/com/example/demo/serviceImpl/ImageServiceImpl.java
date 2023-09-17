@@ -21,7 +21,12 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public Boolean remove(int id) {
+    public boolean check(String id) {
+        return imageRepo.existsById(id);
+    }
+
+    @Override
+    public Boolean remove(String id) {
         try {
             Image image = imageRepo.findImageById(id);
             imageRepo.delete(image);
@@ -29,5 +34,10 @@ public class ImageServiceImpl implements ImageService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public Image getById(String id) {
+        return imageRepo.findImageById(id);
     }
 }

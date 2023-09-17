@@ -13,8 +13,7 @@ import lombok.*;
 @NoArgsConstructor
 public class Image {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private String id;
     private String imageLink;
 
     @JsonIgnore

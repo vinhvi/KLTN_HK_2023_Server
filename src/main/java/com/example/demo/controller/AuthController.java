@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Objects;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/auth")
@@ -17,11 +19,20 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody Account account) {
-        return ResponseEntity.ok().body(accountService.register(account));
+        if (accountService.getByEmail(account.getEmail()).isPresent()) {
+            return ResponseEntity.ok().body("email is ready in database");
+        } else {
+            Account registeredAccount = accountService.register(account);
+            if (registeredAccount == null) {
+                return ResponseEntity.badRequest().body("Error !!");
+            }
+            return ResponseEntity.ok().body(registeredAccount);
+        }
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Account account) {
-        return ResponseEntity.ok().body(accountService.login(account));
+        String token = accountService.login(account);
+        return ResponseEntity.ok().body(Objects.requireNonNullElse(token, "Tài khoản hoặc mật khẩu khôn đúng !!"));
     }
 }

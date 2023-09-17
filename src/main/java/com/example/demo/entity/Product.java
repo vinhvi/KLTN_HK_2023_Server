@@ -18,8 +18,11 @@ public class Product {
     private String id;
     private String productName;
     private String brand;
+
+    @Column(columnDefinition = "LONGTEXT")
     private String description;
     private Date importDate;
+
     private int quantity;
     private double price;
     private double priceImport;
