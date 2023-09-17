@@ -22,7 +22,7 @@ public class SecurityConfiguration {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/**")
+                .requestMatchers("/api/v1/**")
                 .permitAll()
 //                .requestMatchers("/api/manage/admin/**")
 //                .hasRole("ADMIN")
