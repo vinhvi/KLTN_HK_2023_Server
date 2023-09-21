@@ -1,4 +1,5 @@
 package com.example.demo.config;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,10 +23,10 @@ public class SecurityConfiguration {
                 .csrf()
                 .disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/**")
+                .requestMatchers("/api/v1/auth/**")
                 .permitAll()
-//                .requestMatchers("/api/manage/admin/**")
-//                .hasRole("ADMIN")
+                .requestMatchers(AUTH_WHITELIST)
+                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -39,4 +40,20 @@ public class SecurityConfiguration {
 
         return httpSecurity.build();
     }
+
+    private static final String[] AUTH_WHITELIST = {
+            "/api/v1/**",
+            "/v2/api-docs",
+            "/v3/api-docs",
+            "v3/api-docs/**",
+            "api-docs.yaml",
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/webjars/**"
+    };
+
 }
