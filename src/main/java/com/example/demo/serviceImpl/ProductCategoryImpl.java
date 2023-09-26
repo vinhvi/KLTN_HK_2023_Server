@@ -1,6 +1,6 @@
 package com.example.demo.serviceImpl;
 
-import com.example.demo.entity.ProductCategory;
+import com.example.demo.entity.Category;
 import com.example.demo.repository.ProductCategoryRepo;
 import com.example.demo.service.ProductCategoryService;
 import jakarta.transaction.Transactional;
@@ -18,22 +18,22 @@ public class ProductCategoryImpl implements ProductCategoryService {
     private final ProductCategoryRepo productCategoryRepo;
 
     @Override
-    public ProductCategory saveOrUpdate(ProductCategory productCategory) {
-        return productCategoryRepo.save(productCategory);
+    public Category saveOrUpdate(Category category) {
+        return productCategoryRepo.save(category);
     }
 
     @Override
-    public List<ProductCategory> getProductCategories() {
+    public List<Category> getProductCategories() {
         return productCategoryRepo.findAll();
     }
 
     @Override
-    public ProductCategory getById(int id) {
+    public Category getById(int id) {
         return productCategoryRepo.findProductCategoryById(id);
     }
 
     @Override
-    public ProductCategory getByName(String name) {
+    public Category getByName(String name) {
         return productCategoryRepo.findProductCategoryByCategoryName(name);
     }
 }

@@ -1,11 +1,9 @@
 package com.example.demo.serviceImpl;
 
+import com.example.demo.entity.Avatar;
 import com.example.demo.entity.Customer;
-import com.example.demo.entity.Image;
 import com.example.demo.repository.CustomerRepo;
-import com.example.demo.repository.ImageRepo;
 import com.example.demo.service.CustomerService;
-import com.example.demo.service.ImageService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,9 +21,12 @@ public class CustomerImpl implements CustomerService {
 
     @Override
     public Customer addCustomer(Customer customer) {
+
         //set image default in database for customer if image null
-        if (customer.getImage() == null) {
-            customer.setImage("https://res.cloudinary.com/dv329zg5e/image/upload/v1692689754/user_default_txm2pe.png");
+        if (customer.getAvatar() == null) {
+            Avatar avatar = new Avatar();
+            avatar.setId("default");
+            customer.setAvatar(avatar);
         }
         return customerRepo.save(customer);
     }

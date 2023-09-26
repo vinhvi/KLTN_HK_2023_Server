@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Image;
 import com.example.demo.entity.ShoppingCartDetail;
 import com.example.demo.service.ShoppingCartDetailService;
 import lombok.RequiredArgsConstructor;

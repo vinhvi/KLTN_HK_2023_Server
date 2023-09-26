@@ -1,11 +1,10 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.Image;
+import com.example.demo.entity.Avatar;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ImageRepo extends JpaRepository<Image,String> {
-    Image findImageById(String id);
-
+public interface AvatarRepo extends JpaRepository<Avatar,String> {
+    Avatar findAvatarById(String id);
 }

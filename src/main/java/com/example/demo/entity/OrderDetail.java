@@ -3,6 +3,8 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "order_details")
 @Data
@@ -14,13 +16,16 @@ public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private Date date;
+    private int quantity;
+    private double total;
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
-    private int quantity;
+
 
 
 }

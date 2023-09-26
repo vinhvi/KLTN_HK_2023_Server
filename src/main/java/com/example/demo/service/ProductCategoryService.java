@@ -1,15 +1,15 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.ProductCategory;
+import com.example.demo.entity.Category;
 
 import java.util.List;
 
 public interface ProductCategoryService {
-    ProductCategory saveOrUpdate(ProductCategory productCategory);
+    Category saveOrUpdate(Category category);
 
-    List<ProductCategory> getProductCategories();
+    List<Category> getProductCategories();
 
-    ProductCategory getById(int id);
+    Category getById(int id);
 
-    ProductCategory getByName(String name);
+    Category getByName(String name);
 }

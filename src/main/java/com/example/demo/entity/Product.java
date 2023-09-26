@@ -17,7 +17,10 @@ public class Product {
     @Id
     private String id;
     private String productName;
-    private String brand;
+
+    @ManyToOne
+    @JoinColumn(name = "brands_id")
+    private Brand brand;
 
     @Column(columnDefinition = "LONGTEXT")
     private String description;
@@ -27,16 +30,18 @@ public class Product {
     private double price;
     private double priceImport;
     @ManyToOne
-    @JoinColumn(name = "category_id")
-    private ProductCategory category;
+    @JoinColumn(name = "categories_id")
+    private Category category;
 
     @ManyToOne
-    @JoinColumn(name = "supplier_id")
+    @JoinColumn(name = "suppliers_id")
     private Supplier supplier;
 
     @OneToMany(mappedBy = "product")
     private List<ProductSpecification> specifications;
 
     @OneToMany(mappedBy = "product")
-    private List<Image> images;
+    private List<ImageProduct> imageProducts;
+
+
 }

@@ -28,7 +28,7 @@ CREATE TABLE `customers` (
   `date_of_birth` datetime(6) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `first_name` varchar(255) DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL,
+  `imageProduct` varchar(255) DEFAULT NULL,
   `last_name` varchar(255) DEFAULT NULL,
   `phone` varchar(255) DEFAULT NULL,
   `sex` int NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE `customers` (
 
 LOCK TABLES `customers` WRITE;
 /*!40000 ALTER TABLE `customers` DISABLE KEYS */;
-INSERT INTO `customers` VALUES ('KH6759','abcxyz','2001-05-03 07:00:00.000000','hoangmai@gmail.com','Hoang','https://res.cloudinary.com/dv329zg5e/image/upload/v1692689754/user_default_txm2pe.png','Mai','09563211',0,'member',2),('KH9994','abcxyz','2001-05-03 07:00:00.000000','lam@gmail.com','Le Hoang','https://res.cloudinary.com/dv329zg5e/image/upload/v1692689754/user_default_txm2pe.png','Lam','093231',1,'member',1);
+INSERT INTO `customers` VALUES ('KH6759','abcxyz','2001-05-03 07:00:00.000000','hoangmai@gmail.com','Hoang','https://res.cloudinary.com/dv329zg5e/imageProduct/upload/v1692689754/user_default_txm2pe.png','Mai','09563211',0,'member',2),('KH9994','abcxyz','2001-05-03 07:00:00.000000','lam@gmail.com','Le Hoang','https://res.cloudinary.com/dv329zg5e/imageProduct/upload/v1692689754/user_default_txm2pe.png','Lam','093231',1,'member',1);
 /*!40000 ALTER TABLE `customers` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

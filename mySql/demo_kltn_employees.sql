@@ -28,7 +28,7 @@ CREATE TABLE `employees` (
   `date_of_birth` datetime(6) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `first_name` varchar(255) DEFAULT NULL,
-  `image` varchar(255) DEFAULT NULL,
+  `imageProduct` varchar(255) DEFAULT NULL,
   `last_name` varchar(255) DEFAULT NULL,
   `phone` varchar(255) DEFAULT NULL,
   `sex` int NOT NULL,

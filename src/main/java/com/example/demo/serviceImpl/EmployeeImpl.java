@@ -1,10 +1,11 @@
 package com.example.demo.serviceImpl;
 
+import com.example.demo.entity.Avatar;
 import com.example.demo.entity.Employee;
-import com.example.demo.entity.Image;
+import com.example.demo.entity.ImageProduct;
 import com.example.demo.repository.EmployeeRepo;
 import com.example.demo.service.EmployeeService;
-import com.example.demo.service.ImageService;
+import com.example.demo.service.ImageProductService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,14 +19,14 @@ import java.util.List;
 @Slf4j
 public class EmployeeImpl implements EmployeeService {
     private EmployeeRepo employeeRepo;
-    private final ImageService imageService;
 
     @Override
     public Employee createEmployee(Employee employee) {
-        Image imageDefault = new Image();
         //set image default in database for customer if image null
-        if (employee.getImage() == null) {
-            employee.setImage("https://res.cloudinary.com/dv329zg5e/image/upload/v1692689754/user_default_txm2pe.png");
+        if (employee.getAvatar() == null) {
+            Avatar avatar = new Avatar();
+            avatar.setId("default");
+            employee.setAvatar(avatar);
         }
         return employeeRepo.save(employee);
     }

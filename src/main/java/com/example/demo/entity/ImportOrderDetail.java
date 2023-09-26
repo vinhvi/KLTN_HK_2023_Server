@@ -3,26 +3,24 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
-
 @Entity
-@Table(name = "shopping_cart_details")
+@Table(name = "import_order_details")
 @Data
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ShoppingCartDetail {
+public class ImportOrderDetail {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private Date date;
-    @ManyToOne
+    private int quantity;
+    private double importPrice;
+    @OneToOne
     @JoinColumn(name = "product_id")
     private Product product;
     @ManyToOne
-    @JoinColumn(name = "shoppingCart_id")
-    private ShoppingCart shoppingCart;
-    private int quantity;
-    private double total;
+    @JoinColumn(name = "importOrder_id")
+    private ImportOrder importOrder;
 }

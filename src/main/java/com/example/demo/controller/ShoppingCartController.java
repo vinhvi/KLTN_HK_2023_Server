@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.ShoppingCart;
-import com.example.demo.entity.SpecificationCategory;
 import com.example.demo.service.ShoppingCartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

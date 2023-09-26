@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.ProductCategory;
+import com.example.demo.entity.Category;
 import com.example.demo.service.ProductCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,8 +16,8 @@ public class ProductCategoryController {
     private final ProductCategoryService productCategoryService;
 
     @PostMapping("/saveOrUpdate")
-    public ResponseEntity<?> saveOrUpdate(@RequestBody ProductCategory productCategory) {
-        ProductCategory check = productCategoryService.saveOrUpdate(productCategory);
+    public ResponseEntity<?> saveOrUpdate(@RequestBody Category category) {
+        Category check = productCategoryService.saveOrUpdate(category);
         if (check == null) {
             return ResponseEntity.badRequest().body("failed !!");
         }
@@ -26,13 +26,13 @@ public class ProductCategoryController {
 
     @GetMapping("/getAll")
     public ResponseEntity<?> getAll() {
-        List<ProductCategory> categories = productCategoryService.getProductCategories();
+        List<Category> categories = productCategoryService.getProductCategories();
         return ResponseEntity.ok().body(Objects.requireNonNullElse(categories, "null !"));
     }
 
     @GetMapping("/getByCategoryName/{categoryName}")
     public ResponseEntity<?> getByCategoryName(@PathVariable("categoryName") String categoryName) {
-        ProductCategory category = productCategoryService.getByName(categoryName);
+        Category category = productCategoryService.getByName(categoryName);
         if (category == null) {
             return ResponseEntity.badRequest().body(categoryName + " not found !!");
         }
@@ -41,7 +41,7 @@ public class ProductCategoryController {
 
     @GetMapping("/getByCategoryId/{id}")
     public ResponseEntity<?> getByCategoryId(@PathVariable("id") int id) {
-        ProductCategory category = productCategoryService.getById(id);
+        Category category = productCategoryService.getById(id);
         if (category == null) {
             return ResponseEntity.badRequest().body(id + " not found !!");
         }

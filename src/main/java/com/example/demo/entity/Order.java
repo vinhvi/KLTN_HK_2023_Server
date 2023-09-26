@@ -17,6 +17,8 @@ public class Order {
     @Id
     private String id;
     private Date date;
+    private String statusOrder;
+    private String note;
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;

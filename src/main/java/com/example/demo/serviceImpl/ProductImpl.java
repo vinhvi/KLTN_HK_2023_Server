@@ -1,7 +1,7 @@
 package com.example.demo.serviceImpl;
 
 import com.example.demo.entity.Product;
-import com.example.demo.entity.ProductCategory;
+import com.example.demo.entity.Category;
 import com.example.demo.repository.ProductRepo;
 import com.example.demo.service.ProductService;
 import jakarta.transaction.Transactional;
@@ -26,8 +26,8 @@ public class ProductImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getByCategory(ProductCategory productCategory) {
-        return productRepo.findProductByCategory(productCategory);
+    public List<Product> getByCategory(Category category) {
+        return productRepo.findProductByCategory(category);
     }
 
     @Override

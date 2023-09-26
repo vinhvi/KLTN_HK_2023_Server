@@ -1,6 +1,7 @@
 package com.example.demo.DataBean;
 
 import com.example.demo.entity.Account;
+import com.example.demo.entity.Avatar;
 import lombok.*;
 
 import java.util.Date;
@@ -20,7 +21,7 @@ public class CustomerDataBean {
     private int sex;
     private String phone;
     private String address;
-    private String image;
+    private Avatar avatar;
     private Account account;
     private String customerType;
     private String token;

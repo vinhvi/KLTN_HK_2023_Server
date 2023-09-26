@@ -62,7 +62,7 @@ public class AccountImpl implements AccountService {
         customerDataBean.setId(customer.getId());
         customerDataBean.setEmail(customer.getEmail());
         customerDataBean.setCustomerType(customer.getCustomerType());
-        customerDataBean.setImage(customer.getImage());
+        customerDataBean.setAvatar(customer.getAvatar());
         customerDataBean.setAccount(customer.getAccount());
         customerDataBean.setAddress(customer.getAddress());
         customerDataBean.setSex(customer.getSex());
@@ -79,7 +79,7 @@ public class AccountImpl implements AccountService {
         employeeDataBean.setId(employee.getId());
         employeeDataBean.setEmail(employee.getEmail());
         employeeDataBean.setWorkdate(employee.getWorkdate());
-        employeeDataBean.setImage(employee.getImage());
+        employeeDataBean.setAvatar(employee.getAvatar());
         employeeDataBean.setAccount(employee.getAccount());
         employeeDataBean.setAddress(employee.getAddress());
         employeeDataBean.setSex(employee.getSex());
