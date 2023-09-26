@@ -4,6 +4,7 @@ import com.example.demo.entity.Avatar;
 import com.example.demo.entity.Employee;
 import com.example.demo.entity.ImageProduct;
 import com.example.demo.repository.EmployeeRepo;
+import com.example.demo.service.AvatarService;
 import com.example.demo.service.EmployeeService;
 import com.example.demo.service.ImageProductService;
 import jakarta.transaction.Transactional;
@@ -18,14 +19,14 @@ import java.util.List;
 @Transactional
 @Slf4j
 public class EmployeeImpl implements EmployeeService {
-    private EmployeeRepo employeeRepo;
+    private final EmployeeRepo employeeRepo;
+    private final AvatarService avatarService;
 
     @Override
     public Employee createEmployee(Employee employee) {
         //set image default in database for customer if image null
         if (employee.getAvatar() == null) {
-            Avatar avatar = new Avatar();
-            avatar.setId("default");
+            Avatar avatar = avatarService.getById("default");
             employee.setAvatar(avatar);
         }
         return employeeRepo.save(employee);
@@ -43,7 +44,7 @@ public class EmployeeImpl implements EmployeeService {
 
     @Override
     public Employee getByEmail(String email) {
-        return null;
+        return employeeRepo.findEmployeeByEmail(email);
     }
 
     @Override

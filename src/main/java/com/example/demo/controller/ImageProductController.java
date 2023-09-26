@@ -12,7 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +36,16 @@ public class ImageProductController {
         ImageProduct imageProduct = new ImageProduct();
         imageProduct.setImageLink((String) result.get("url"));
         imageProduct.setId((String) result.get("public_id"));
+        // Sử dụng DateTimeFormatter để chuyển đổi chuỗi thành đối tượng Instant
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
+        Instant instant = Instant.from(formatter.parse((String) result.get("created_at")));
+        Date date = Date.from(instant);
+        imageProduct.setDate(date);
+        imageProduct.setType((String) result.get("format"));
+        int bytes = (int) result.get("bytes");
+        double size = (double) bytes / 1024;
+        String sizeFormat = String.format("%.3f", size);
+        imageProduct.setSize(sizeFormat + "KB");
         Product product = new Product();
         product.setId(productId);
         imageProduct.setProduct(product);
@@ -51,6 +64,16 @@ public class ImageProductController {
             ImageProduct imageProduct = new ImageProduct();
             imageProduct.setImageLink((String) result.get("url"));
             imageProduct.setId((String) result.get("public_id"));
+            // Sử dụng DateTimeFormatter để chuyển đổi chuỗi thành đối tượng Instant
+            DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
+            Instant instant = Instant.from(formatter.parse((String) result.get("created_at")));
+            Date date = Date.from(instant);
+            imageProduct.setDate(date);
+            imageProduct.setType((String) result.get("format"));
+            int bytes = (int) result.get("bytes");
+            double size = (double) bytes / 1024;
+            String sizeFormat = String.format("%.3f", size);
+            imageProduct.setSize(sizeFormat + "KB");
             Product product = new Product();
             product.setId(productId);
             imageProduct.setProduct(product);

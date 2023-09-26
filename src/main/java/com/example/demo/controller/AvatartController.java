@@ -1,8 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Avatar;
-import com.example.demo.entity.ImageProduct;
-import com.example.demo.entity.Product;
 import com.example.demo.service.AvatarService;
 import com.example.demo.service.CloudinaryService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +11,11 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Map;
 
 @RestController
@@ -33,6 +36,16 @@ public class AvatartController {
         avatar.setImageLink((String) result.get("url"));
         avatar.setName((String) result.get("original_filename"));
         avatar.setId((String) result.get("public_id"));
+        // Sử dụng DateTimeFormatter để chuyển đổi chuỗi thành đối tượng Instant
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
+        Instant instant = Instant.from(formatter.parse((String) result.get("created_at")));
+        Date date = Date.from(instant);
+        avatar.setDate(date);
+        avatar.setType((String) result.get("format"));
+        int bytes = (int) result.get("bytes");
+        double size = (double) bytes / 1024;
+        String sizeFormat = String.format("%.3f", size);
+        avatar.setSize(sizeFormat + "KB");
         return ResponseEntity.ok().body(avatarService.addAvatar(avatar));
     }
 

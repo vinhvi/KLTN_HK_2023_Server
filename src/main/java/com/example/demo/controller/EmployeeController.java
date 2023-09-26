@@ -16,8 +16,12 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @PostMapping("/createOrUpdate")
-    public ResponseEntity<Employee> create(@RequestBody Employee employee) {
-        return ResponseEntity.ok().body(employeeService.createEmployee(employee));
+    public ResponseEntity<?> create(@RequestBody Employee employee) {
+        Employee employee1 = employeeService.createEmployee(employee);
+        if (employee1 == null) {
+            return ResponseEntity.badRequest().body("error !!");
+        }
+        return ResponseEntity.ok().body(employee1);
     }
 
 
