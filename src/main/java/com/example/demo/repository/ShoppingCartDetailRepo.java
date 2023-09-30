@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ShoppingCartDetailRepo extends JpaRepository<ShoppingCartDetail,Integer> {
+public interface ShoppingCartDetailRepo extends JpaRepository<ShoppingCartDetail, Integer> {
     ShoppingCartDetail findShoppingCartDetailById(int id);
+
+    List<ShoppingCartDetail> findShoppingCartDetailByShoppingCart(int cartId);
 }

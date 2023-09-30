@@ -15,29 +15,50 @@ public class ShoppingCartController {
 
     @PostMapping("/saveOrUpdate")
     public ResponseEntity<?> saveOrUpdate(@RequestBody ShoppingCart shoppingCart) {
-        ShoppingCart check = service.saveOrUpdate(shoppingCart);
-        if (check == null) {
-            return ResponseEntity.badRequest().body("Failed !!");
+        try {
+            ShoppingCart check = service.saveOrUpdate(shoppingCart);
+            if (check == null) {
+                return ResponseEntity.badRequest().body("Failed !!");
+            }
+            return ResponseEntity.ok().body(check);
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
-        return ResponseEntity.ok().body(check);
+
     }
 
     @GetMapping("/getById/{id}")
     public ResponseEntity<?> getByName(@PathVariable("id") int id) {
-        ShoppingCart shoppingCart = service.getById(id);
-        if (shoppingCart == null) {
-            return ResponseEntity.badRequest().body(id + " not found !!");
+        try {
+            ShoppingCart shoppingCart = service.getById(id);
+            if (shoppingCart == null) {
+                return ResponseEntity.badRequest().body(id + " not found !!");
+            }
+            return ResponseEntity.ok().body(checkAndUpdate(shoppingCart));
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
-        return ResponseEntity.ok().body(shoppingCart);
     }
 
     @GetMapping("/getByCustomer")
     public ResponseEntity<?> getByName(@RequestBody Customer customer) {
-        ShoppingCart shoppingCart = service.getByCustomer(customer);
-        if (shoppingCart == null) {
-            return ResponseEntity.badRequest().body(customer.getId() + " not found !!");
+        try {
+            ShoppingCart shoppingCart = service.getByCustomer(customer);
+            if (shoppingCart == null) {
+                return ResponseEntity.badRequest().body(customer.getId() + " not found !!");
+            }
+            return ResponseEntity.ok().body(checkAndUpdate(shoppingCart));
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
-        return ResponseEntity.ok().body(shoppingCart);
     }
 
+    private ShoppingCart checkAndUpdate(ShoppingCart shoppingCart) {
+        int sl = shoppingCart.getShoppingCartDetails().size();
+        if (sl != shoppingCart.getQuantity()) {
+            shoppingCart.setQuantity(sl);
+            service.saveOrUpdate(shoppingCart);
+        }
+        return shoppingCart;
+    }
 }

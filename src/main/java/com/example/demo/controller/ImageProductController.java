@@ -28,34 +28,7 @@ public class ImageProductController {
 
     @PostMapping("/saveOrUpdate/{productId}")
     public ResponseEntity<?> saveOrUpdate(@RequestBody MultipartFile multipartFile, @PathVariable("productId") String productId) throws IOException {
-        BufferedImage bi = ImageIO.read(multipartFile.getInputStream());
-        if (bi == null) {
-            return ResponseEntity.badRequest().body("Error !!");
-        }
-        Map result = cloudinaryService.upload(multipartFile);
-        ImageProduct imageProduct = new ImageProduct();
-        imageProduct.setImageLink((String) result.get("url"));
-        imageProduct.setIdCloud((String) result.get("public_id"));
-        // Sử dụng DateTimeFormatter để chuyển đổi chuỗi thành đối tượng Instant
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
-        Instant instant = Instant.from(formatter.parse((String) result.get("created_at")));
-        Date date = Date.from(instant);
-        imageProduct.setDate(date);
-        imageProduct.setType((String) result.get("format"));
-        int bytes = (int) result.get("bytes");
-        double size = (double) bytes / 1024;
-        String sizeFormat = String.format("%.3f", size);
-        imageProduct.setSize(sizeFormat + "KB");
-        Product product = new Product();
-        product.setId(productId);
-        imageProduct.setProduct(product);
-        return ResponseEntity.ok().body(imageProductService.addImage(imageProduct));
-    }
-
-    @PostMapping("/saveOrUpdateForList/{productId}")
-    public ResponseEntity<?> saveOrUpdateForList(@RequestBody List<MultipartFile> multipartFiles, @PathVariable("productId") String productId) throws IOException {
-        List<ImageProduct> imageProducts = new ArrayList<>();
-        for (MultipartFile multipartFile : multipartFiles) {
+        try {
             BufferedImage bi = ImageIO.read(multipartFile.getInputStream());
             if (bi == null) {
                 return ResponseEntity.badRequest().body("Error !!");
@@ -77,19 +50,61 @@ public class ImageProductController {
             Product product = new Product();
             product.setId(productId);
             imageProduct.setProduct(product);
-            imageProducts.add(imageProductService.addImage(imageProduct));
+            return ResponseEntity.ok().body(imageProductService.addImage(imageProduct));
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
-        return ResponseEntity.ok().body(imageProducts);
+
+    }
+
+    @PostMapping("/saveOrUpdateForList/{productId}")
+    public ResponseEntity<?> saveOrUpdateForList(@RequestBody List<MultipartFile> multipartFiles, @PathVariable("productId") String productId) throws IOException {
+        try {
+            List<ImageProduct> imageProducts = new ArrayList<>();
+            for (MultipartFile multipartFile : multipartFiles) {
+                BufferedImage bi = ImageIO.read(multipartFile.getInputStream());
+                if (bi == null) {
+                    return ResponseEntity.badRequest().body("Error !!");
+                }
+                Map result = cloudinaryService.upload(multipartFile);
+                ImageProduct imageProduct = new ImageProduct();
+                imageProduct.setImageLink((String) result.get("url"));
+                imageProduct.setIdCloud((String) result.get("public_id"));
+                // Sử dụng DateTimeFormatter để chuyển đổi chuỗi thành đối tượng Instant
+                DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
+                Instant instant = Instant.from(formatter.parse((String) result.get("created_at")));
+                Date date = Date.from(instant);
+                imageProduct.setDate(date);
+                imageProduct.setType((String) result.get("format"));
+                int bytes = (int) result.get("bytes");
+                double size = (double) bytes / 1024;
+                String sizeFormat = String.format("%.3f", size);
+                imageProduct.setSize(sizeFormat + "KB");
+                Product product = new Product();
+                product.setId(productId);
+                imageProduct.setProduct(product);
+                imageProducts.add(imageProductService.addImage(imageProduct));
+            }
+            return ResponseEntity.ok().body(imageProducts);
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
+        }
+
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id) throws IOException {
-        if (!imageProductService.check(id)) {
-            return ResponseEntity.badRequest().body("ImageProduct not found !!");
+        try {
+            if (!imageProductService.check(id)) {
+                return ResponseEntity.badRequest().body("ImageProduct not found !!");
+            }
+            ImageProduct imageProduct = imageProductService.getById(id);
+            Map result = cloudinaryService.delete(imageProduct.getIdCloud());
+            imageProductService.remove(id);
+            return ResponseEntity.ok().body(result);
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
-        ImageProduct imageProduct = imageProductService.getById(id);
-        Map result = cloudinaryService.delete(imageProduct.getIdCloud());
-        imageProductService.remove(id);
-        return ResponseEntity.ok().body(result);
+
     }
 }

@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -18,5 +20,15 @@ public class ProductSpecificationImpl implements ProductSpecificationService {
     @Override
     public ProductSpecification saveOrUpdate(ProductSpecification productSpecification) {
         return productSpecificationRepo.save(productSpecification);
+    }
+
+    @Override
+    public ProductSpecification getById(int id) {
+        return productSpecificationRepo.findProductSpecificationById(id);
+    }
+
+    @Override
+    public void delete(ProductSpecification productSpecification) {
+        productSpecificationRepo.delete(productSpecification);
     }
 }

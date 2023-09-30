@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -34,6 +36,11 @@ public class ShoppingCartDetailImpl implements ShoppingCartDetailService {
     @Override
     public ShoppingCartDetail getById(int id) {
         return shoppingCartDetailRepo.findShoppingCartDetailById(id);
+    }
+
+    @Override
+    public List<ShoppingCartDetail> getByCart(int id) {
+        return shoppingCartDetailRepo.findShoppingCartDetailByShoppingCart(id);
     }
 }
 

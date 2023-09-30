@@ -49,7 +49,7 @@ public class AvatartController {
             avatar.setSize(sizeFormat + "KB");
             return ResponseEntity.ok().body(avatarService.addAvatar(avatar));
         } catch (Exception exception) {
-            return ResponseEntity.badRequest().body("There is an exception when execute!!" + exception);
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
 
     }
@@ -67,7 +67,7 @@ public class AvatartController {
             }
             return ResponseEntity.ok().body(avatarService.remove(id));
         } catch (Exception exception) {
-            return ResponseEntity.badRequest().body("There is an exception when execute!!" + exception);
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
 
     }
