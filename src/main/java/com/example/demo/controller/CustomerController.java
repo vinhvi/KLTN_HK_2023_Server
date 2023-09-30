@@ -20,7 +20,7 @@ public class CustomerController {
         try {
             return ResponseEntity.ok().body(customerService.addCustomer(customer));
         } catch (Exception exception) {
-            return ResponseEntity.badRequest().body("There is an exception when execute!!" + exception);
+            return ResponseEntity.badRequest().body("There is an exception when execute!! --> " + exception);
         }
     }
 
@@ -30,7 +30,7 @@ public class CustomerController {
             return ResponseEntity.ok().body(customerService.randomId());
 
         } catch (Exception exception) {
-            return ResponseEntity.badRequest().body("There is an exception when execute!!" + exception);
+            return ResponseEntity.badRequest().body("There is an exception when execute !! -->" + exception);
         }
 
     }
@@ -45,25 +45,35 @@ public class CustomerController {
                 return ResponseEntity.ok().body("null !!");
             }
         } catch (Exception exception) {
-            return ResponseEntity.badRequest().body("There is an exception when execute!!" + exception);
+            return ResponseEntity.badRequest().body("There is an exception when execute !! -->" + exception);
         }
     }
 
     @GetMapping("/getByEmail/{email}")
     public ResponseEntity<?> getByEmail(@PathVariable("email") String email) {
-        Customer customer = customerService.getByEmail(email);
-        if (customer != null) {
-            return ResponseEntity.ok(customer);
+        try {
+            Customer customer = customerService.getByEmail(email);
+            if (customer != null) {
+                return ResponseEntity.ok(customer);
+            }
+            return ResponseEntity.ok().body(email + " is not found !!");
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
-        return ResponseEntity.status(201).body("Không Tìm Thấy !!");
+
     }
 
     @GetMapping("/getByPhone/{phone}")
     public ResponseEntity<?> getByPhone(@PathVariable("phone") String phone) {
-        Customer customer = customerService.getByPhone(phone);
-        if (customer != null) {
-            return ResponseEntity.ok(customer);
+        try {
+            Customer customer = customerService.getByPhone(phone);
+            if (customer != null) {
+                return ResponseEntity.ok(customer);
+            }
+            return ResponseEntity.ok().body(phone + " is not found !!");
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
-        return ResponseEntity.status(201).body("Không Tìm Thấy !!");
+
     }
 }
