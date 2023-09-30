@@ -17,21 +17,35 @@ public class CustomerController {
 
     @PostMapping("/createOrUpdate")
     public ResponseEntity<?> createOrUpdate(@RequestBody Customer customer) {
-        return ResponseEntity.ok().body(customerService.addCustomer(customer));
+        try {
+            return ResponseEntity.ok().body(customerService.addCustomer(customer));
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute!!" + exception);
+        }
     }
 
     @GetMapping("/randomId")
     public ResponseEntity<String> randomIdCustomer() {
-        return ResponseEntity.ok().body(customerService.randomId());
+        try {
+            return ResponseEntity.ok().body(customerService.randomId());
+
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute!!" + exception);
+        }
+
     }
 
     @GetMapping("/getListCustomer")
     public ResponseEntity<?> getListCustomer() {
-        List<Customer> customerList = customerService.getAll();
-        if (customerList != null) {
-            return ResponseEntity.ok().body(customerList);
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi Server !!");
+        try {
+            List<Customer> customerList = customerService.getAll();
+            if (!customerList.isEmpty()) {
+                return ResponseEntity.ok().body(customerList);
+            } else {
+                return ResponseEntity.ok().body("null !!");
+            }
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute!!" + exception);
         }
     }
 

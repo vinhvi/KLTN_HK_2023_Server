@@ -17,7 +17,11 @@ public class ProductController {
 
     @GetMapping("/randomId")
     public ResponseEntity<?> randomId() {
-        return ResponseEntity.ok().body(productService.randomId());
+        try {
+            return ResponseEntity.ok().body(productService.randomId());
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute!!" + exception);
+        }
     }
 
     @PostMapping("/saveOrUpdate")
