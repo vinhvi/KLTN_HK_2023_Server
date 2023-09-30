@@ -26,7 +26,9 @@ public class EmployeeImpl implements EmployeeService {
     public Employee createEmployee(Employee employee) {
         //set image default in database for customer if image null
         if (employee.getAvatar() == null) {
-            Avatar avatar = avatarService.getById("default");
+            Avatar avatar = new Avatar();
+            avatar.setIdCloud("default");
+            avatar.setImageLink("https://res.cloudinary.com/dv329zg5e/image/upload/v1692689754/user_default_txm2pe.png");
             employee.setAvatar(avatar);
         }
         return employeeRepo.save(employee);

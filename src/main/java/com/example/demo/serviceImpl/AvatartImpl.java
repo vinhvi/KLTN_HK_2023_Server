@@ -22,12 +22,12 @@ public class AvatartImpl implements AvatarService {
     }
 
     @Override
-    public boolean check(String id) {
+    public boolean check(int id) {
         return avatarRepo.existsById(id);
     }
 
     @Override
-    public Boolean remove(String id) {
+    public Boolean remove(int id) {
         try {
             Avatar avatar = avatarRepo.findAvatarById(id);
             avatarRepo.delete(avatar);
@@ -38,7 +38,7 @@ public class AvatartImpl implements AvatarService {
     }
 
     @Override
-    public Avatar getById(String id) {
+    public Avatar getById(int id) {
         return avatarRepo.findAvatarById(id);
     }
 }

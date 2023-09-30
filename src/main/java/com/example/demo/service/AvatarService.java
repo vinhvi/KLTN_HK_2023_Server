@@ -4,7 +4,7 @@ import com.example.demo.entity.Avatar;
 
 public interface AvatarService {
     Avatar addAvatar(Avatar avatar);
-    boolean check(String id);
-    Boolean remove(String id);
-    Avatar getById(String id);
+    boolean check(int id);
+    Boolean remove(int id);
+    Avatar getById(int id);
 }

@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ImageProductRepo extends JpaRepository<ImageProduct,String> {
-    ImageProduct findImageById(String id);
+public interface ImageProductRepo extends JpaRepository<ImageProduct,Integer> {
+    ImageProduct findImageById(int id);
 
 }

@@ -35,7 +35,7 @@ public class ImageProductController {
         Map result = cloudinaryService.upload(multipartFile);
         ImageProduct imageProduct = new ImageProduct();
         imageProduct.setImageLink((String) result.get("url"));
-        imageProduct.setId((String) result.get("public_id"));
+        imageProduct.setIdCloud((String) result.get("public_id"));
         // Sử dụng DateTimeFormatter để chuyển đổi chuỗi thành đối tượng Instant
         DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
         Instant instant = Instant.from(formatter.parse((String) result.get("created_at")));
@@ -63,7 +63,7 @@ public class ImageProductController {
             Map result = cloudinaryService.upload(multipartFile);
             ImageProduct imageProduct = new ImageProduct();
             imageProduct.setImageLink((String) result.get("url"));
-            imageProduct.setId((String) result.get("public_id"));
+            imageProduct.setIdCloud((String) result.get("public_id"));
             // Sử dụng DateTimeFormatter để chuyển đổi chuỗi thành đối tượng Instant
             DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
             Instant instant = Instant.from(formatter.parse((String) result.get("created_at")));
@@ -83,12 +83,12 @@ public class ImageProductController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") String id) throws IOException {
+    public ResponseEntity<?> delete(@PathVariable("id") int id) throws IOException {
         if (!imageProductService.check(id)) {
             return ResponseEntity.badRequest().body("ImageProduct not found !!");
         }
         ImageProduct imageProduct = imageProductService.getById(id);
-        Map result = cloudinaryService.delete(imageProduct.getId());
+        Map result = cloudinaryService.delete(imageProduct.getIdCloud());
         imageProductService.remove(id);
         return ResponseEntity.ok().body(result);
     }

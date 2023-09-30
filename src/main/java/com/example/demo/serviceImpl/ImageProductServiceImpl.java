@@ -21,12 +21,12 @@ public class ImageProductServiceImpl implements ImageProductService {
     }
 
     @Override
-    public boolean check(String id) {
+    public boolean check(int id) {
         return imageProductRepo.existsById(id);
     }
 
     @Override
-    public Boolean remove(String id) {
+    public Boolean remove(int id) {
         try {
             ImageProduct imageProduct = imageProductRepo.findImageById(id);
             imageProductRepo.delete(imageProduct);
@@ -37,7 +37,7 @@ public class ImageProductServiceImpl implements ImageProductService {
     }
 
     @Override
-    public ImageProduct getById(String id) {
+    public ImageProduct getById(int id) {
         return imageProductRepo.findImageById(id);
     }
 }
