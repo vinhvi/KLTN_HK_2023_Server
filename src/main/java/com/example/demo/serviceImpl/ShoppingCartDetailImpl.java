@@ -1,5 +1,6 @@
 package com.example.demo.serviceImpl;
 
+import com.example.demo.entity.ShoppingCart;
 import com.example.demo.entity.ShoppingCartDetail;
 import com.example.demo.repository.ShoppingCartDetailRepo;
 import com.example.demo.service.ShoppingCartDetailService;
@@ -39,8 +40,8 @@ public class ShoppingCartDetailImpl implements ShoppingCartDetailService {
     }
 
     @Override
-    public List<ShoppingCartDetail> getByCart(int id) {
-        return shoppingCartDetailRepo.findShoppingCartDetailByShoppingCart(id);
+    public List<ShoppingCartDetail> getByCart(ShoppingCart shoppingCart) {
+        return shoppingCartDetailRepo.findShoppingCartDetailByShoppingCart(shoppingCart);
     }
 }
 

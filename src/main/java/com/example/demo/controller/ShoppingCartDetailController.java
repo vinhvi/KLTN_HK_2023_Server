@@ -46,7 +46,7 @@ public class ShoppingCartDetailController {
             if (shoppingCart == null) {
                 return ResponseEntity.ok().body(cartId + " not found !!");
             }
-            List<ShoppingCartDetail> cartItems = cartDetailService.getByCart(cartId);
+            List<ShoppingCartDetail> cartItems = cartDetailService.getByCart(shoppingCart);
             if (cartItems.isEmpty()) {
                 return ResponseEntity.ok().body("cart is null !!");
             }
