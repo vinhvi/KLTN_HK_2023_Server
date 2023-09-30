@@ -30,5 +30,10 @@ public class ShoppingCartDetailImpl implements ShoppingCartDetailService {
         }
         return true;
     }
+
+    @Override
+    public ShoppingCartDetail getById(int id) {
+        return shoppingCartDetailRepo.findShoppingCartDetailById(id);
+    }
 }
 

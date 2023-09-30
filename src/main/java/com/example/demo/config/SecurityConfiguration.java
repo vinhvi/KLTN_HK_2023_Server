@@ -25,8 +25,6 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/**")
                 .permitAll()
-//                .requestMatchers("api/v1/customer/createOrUpdate")
-//                .permitAll()
                 .requestMatchers(AUTH_WHITELIST)
                 .permitAll()
                 .anyRequest()

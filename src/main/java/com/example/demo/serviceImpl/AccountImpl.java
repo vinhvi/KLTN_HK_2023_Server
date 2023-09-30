@@ -54,9 +54,15 @@ public class AccountImpl implements AccountService {
 
     @Override
     public String login(Account account) {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(account.getUsername(), account.getPassword()));
-        var user = accountRepo.findByEmail(account.getEmail()).orElseThrow();
-        return jwtService.generateToken(user);
+        String token = "";
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(account.getUsername(), account.getPassword()));
+            var user = accountRepo.findByEmail(account.getEmail()).orElseThrow();
+            return jwtService.generateToken(user);
+        } catch (Exception exception) {
+            return token;
+        }
+
     }
 
     @Override

@@ -21,6 +21,14 @@ public class ShoppingCartDetailController {
         return ResponseEntity.ok().body(check);
     }
 
+    public ResponseEntity<?> getById(@PathVariable("id") int id) {
+        try {
+            return ResponseEntity.ok().body(cartDetailService.getById(id));
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute!!" + exception);
+        }
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") int id) {
         if (Boolean.FALSE.equals(cartDetailService.remove(id))) {

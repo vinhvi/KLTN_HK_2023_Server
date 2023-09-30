@@ -36,7 +36,7 @@ public class AuthController {
                 return ResponseEntity.ok().body(registeredAccount);
             }
         } catch (Exception exception) {
-            return ResponseEntity.badRequest().body("There is an exception when execute!!" + exception);
+            return ResponseEntity.badRequest().body("There is an exception when execute!! --> " + exception);
         }
 
     }
@@ -45,8 +45,8 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody Account account) {
         try {
             String token = accountService.login(account);
-            if (token == null) {
-                return ResponseEntity.ok().body("email or incorrect password!!");
+            if (token.equals("")) {
+                return ResponseEntity.ok().body("incorrect email or incorrect password!!");
             }
             Customer customer = customerService.getByEmail(account.getEmail());
             if (customer != null) {
@@ -57,7 +57,7 @@ public class AuthController {
             EmployeeDataBean employeeDataBean = accountService.employeeLogin(token, employee);
             return ResponseEntity.ok().body(employeeDataBean);
         } catch (Exception exception) {
-            return ResponseEntity.badRequest().body("There is an exception when execute!!" + exception);
+            return ResponseEntity.badRequest().body("There is an exception when execute!! --> " + exception);
         }
     }
 }
