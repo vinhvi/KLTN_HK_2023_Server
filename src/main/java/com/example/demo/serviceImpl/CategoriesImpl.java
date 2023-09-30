@@ -1,8 +1,8 @@
 package com.example.demo.serviceImpl;
 
 import com.example.demo.entity.Category;
-import com.example.demo.repository.ProductCategoryRepo;
-import com.example.demo.service.ProductCategoryService;
+import com.example.demo.repository.CategoriesRepo;
+import com.example.demo.service.CategoriesService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,26 +14,26 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
-public class ProductCategoryImpl implements ProductCategoryService {
-    private final ProductCategoryRepo productCategoryRepo;
+public class CategoriesImpl implements CategoriesService {
+    private final CategoriesRepo categoriesRepo;
 
     @Override
     public Category saveOrUpdate(Category category) {
-        return productCategoryRepo.save(category);
+        return categoriesRepo.save(category);
     }
 
     @Override
     public List<Category> getProductCategories() {
-        return productCategoryRepo.findAll();
+        return categoriesRepo.findAll();
     }
 
     @Override
     public Category getById(int id) {
-        return productCategoryRepo.findProductCategoryById(id);
+        return categoriesRepo.findProductCategoryById(id);
     }
 
     @Override
     public Category getByName(String name) {
-        return productCategoryRepo.findProductCategoryByCategoryName(name);
+        return categoriesRepo.findProductCategoryByCategoryName(name);
     }
 }

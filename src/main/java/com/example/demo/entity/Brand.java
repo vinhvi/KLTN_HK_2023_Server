@@ -6,9 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 @Entity
 @Table(name = "brands")
 @Getter
@@ -21,10 +18,6 @@ public class Brand {
     private int id;
 
     private String name;
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "tb_brands_categories",
-            joinColumns = @JoinColumn(name = "brands_id"),
-            inverseJoinColumns = @JoinColumn(name = "categories_id"))
-    private Set<Category> categories = new LinkedHashSet<>();
+
 
 }

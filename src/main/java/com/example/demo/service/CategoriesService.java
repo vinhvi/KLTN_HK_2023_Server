@@ -4,7 +4,7 @@ import com.example.demo.entity.Category;
 
 import java.util.List;
 
-public interface ProductCategoryService {
+public interface CategoriesService {
     Category saveOrUpdate(Category category);
 
     List<Category> getProductCategories();
