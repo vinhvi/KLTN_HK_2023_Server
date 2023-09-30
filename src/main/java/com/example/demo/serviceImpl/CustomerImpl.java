@@ -42,6 +42,7 @@ public class CustomerImpl implements CustomerService {
         Date date = calendar.getTime();
         shoppingCart.setDate(date);
         shoppingCart.setCustomer(customerSave);
+        shoppingCartService.saveOrUpdate(shoppingCart);
         return customerSave;
     }
 
