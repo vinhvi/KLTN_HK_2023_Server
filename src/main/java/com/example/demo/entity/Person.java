@@ -22,7 +22,7 @@ public abstract class Person {
     private String phone;
     private String address;
     @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "avatar_id")
+    @JoinColumn(name = "avatars_id")
     private Avatar avatar;
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "account_id")

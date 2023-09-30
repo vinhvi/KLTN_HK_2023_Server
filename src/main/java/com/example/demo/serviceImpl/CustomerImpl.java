@@ -3,6 +3,7 @@ package com.example.demo.serviceImpl;
 import com.example.demo.entity.Avatar;
 import com.example.demo.entity.Customer;
 import com.example.demo.repository.CustomerRepo;
+import com.example.demo.service.AvatarService;
 import com.example.demo.service.CustomerService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import java.util.Random;
 @Slf4j
 public class CustomerImpl implements CustomerService {
     private final CustomerRepo customerRepo;
+    private final AvatarService avatarService;
 
     @Override
     public Customer addCustomer(Customer customer) {
@@ -27,7 +29,7 @@ public class CustomerImpl implements CustomerService {
             Avatar avatar = new Avatar();
             avatar.setIdCloud("default");
             avatar.setImageLink("https://res.cloudinary.com/dv329zg5e/image/upload/v1692689754/user_default_txm2pe.png");
-            customer.setAvatar(avatar);
+            customer.setAvatar(avatarService.addAvatar(avatar));
         }
         return customerRepo.save(customer);
     }
