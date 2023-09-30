@@ -2,14 +2,18 @@ package com.example.demo.serviceImpl;
 
 import com.example.demo.entity.Avatar;
 import com.example.demo.entity.Customer;
+import com.example.demo.entity.ShoppingCart;
 import com.example.demo.repository.CustomerRepo;
 import com.example.demo.service.AvatarService;
 import com.example.demo.service.CustomerService;
+import com.example.demo.service.ShoppingCartService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -20,6 +24,7 @@ import java.util.Random;
 public class CustomerImpl implements CustomerService {
     private final CustomerRepo customerRepo;
     private final AvatarService avatarService;
+    private final ShoppingCartService shoppingCartService;
 
     @Override
     public Customer addCustomer(Customer customer) {
@@ -31,7 +36,13 @@ public class CustomerImpl implements CustomerService {
             avatar.setImageLink("https://res.cloudinary.com/dv329zg5e/image/upload/v1692689754/user_default_txm2pe.png");
             customer.setAvatar(avatarService.addAvatar(avatar));
         }
-        return customerRepo.save(customer);
+        Customer customerSave = customerRepo.save(customer);
+        ShoppingCart shoppingCart = new ShoppingCart();
+        Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        shoppingCart.setDate(date);
+        shoppingCart.setCustomer(customerSave);
+        return customerSave;
     }
 
     @Override

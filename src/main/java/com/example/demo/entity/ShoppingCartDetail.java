@@ -24,5 +24,4 @@ public class ShoppingCartDetail {
     @JoinColumn(name = "shoppingCart_id")
     private ShoppingCart shoppingCart;
     private int quantity;
-    private double total;
 }

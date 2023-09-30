@@ -19,7 +19,6 @@ public class ShoppingCart {
     private int id;
     private Date date;
     private int quantity;
-    private double total;
     @OneToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;

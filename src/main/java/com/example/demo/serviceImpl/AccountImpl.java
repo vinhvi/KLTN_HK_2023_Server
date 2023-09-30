@@ -6,8 +6,10 @@ import com.example.demo.config.JwtService;
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.Employee;
+import com.example.demo.entity.ShoppingCart;
 import com.example.demo.repository.AccountRepo;
 import com.example.demo.service.AccountService;
+import com.example.demo.service.ShoppingCartService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +28,7 @@ public class AccountImpl implements AccountService {
     private final AccountRepo accountRepo;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
+    private final ShoppingCartService shoppingCartService;
     private final JwtService jwtService;
 
     @Override
@@ -70,6 +73,7 @@ public class AccountImpl implements AccountService {
         customerDataBean.setToken(token);
         customerDataBean.setFirstName(customer.getFirstName());
         customerDataBean.setLastName(customer.getLastName());
+        customerDataBean.setShoppingCart(shoppingCartService.getByCustomer(customer));
         return customerDataBean;
     }
 
