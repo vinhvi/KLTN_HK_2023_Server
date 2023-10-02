@@ -74,6 +74,18 @@ public class CustomerController {
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
+    }
 
+    @GetMapping("/getByPhoneOrEmail/{key}")
+    public ResponseEntity<?> getByPhoneOrEmail(@PathVariable("key") String key) {
+        try {
+            Customer customer = customerService.getByPhoneOrEmail(key);
+            if (customer != null) {
+                return ResponseEntity.ok().body(customer);
+            }
+            return ResponseEntity.badRequest().body(key + " not found!!");
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
+        }
     }
 }

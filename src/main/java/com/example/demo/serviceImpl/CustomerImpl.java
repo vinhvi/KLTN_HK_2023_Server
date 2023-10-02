@@ -67,6 +67,11 @@ public class CustomerImpl implements CustomerService {
     }
 
     @Override
+    public Customer getByPhoneOrEmail(String key) {
+        return customerRepo.findCustomerByPhoneOrEmail(key, key);
+    }
+
+    @Override
     public String randomId() {
         Random random = new Random();
         String id = "";

@@ -13,6 +13,6 @@ public interface ProductRepo extends JpaRepository<Product, String> {
 
     List<Product> findProductByCategory(Category category);
 
-    List<Product> findProductByProductNameStartsWith(String name);
+    List<Product> findProductByProductNameContaining(String name);
 
 }
