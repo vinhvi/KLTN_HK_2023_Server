@@ -28,12 +28,27 @@ public class SupplierImpl implements SupplierService {
     }
 
     @Override
-    public Supplier getByName(String name) {
-        return supplierRepo.findSupplierByName(name);
+    public List<Supplier> getByName(String name) {
+        return supplierRepo.findSupplierByNameContaining(name);
     }
 
     @Override
     public List<Supplier> getSuppliers() {
         return supplierRepo.findAll();
+    }
+
+    @Override
+    public Supplier getByEmailOrPhone(String email, String phone) {
+        return supplierRepo.findSupplierByEmailOrPhone(email, phone);
+    }
+
+    @Override
+    public Supplier getByPhone(String phone) {
+        return supplierRepo.findSupplierByPhone(phone);
+    }
+
+    @Override
+    public Supplier getByEmail(String email) {
+        return supplierRepo.findSupplierByEmail(email);
     }
 }

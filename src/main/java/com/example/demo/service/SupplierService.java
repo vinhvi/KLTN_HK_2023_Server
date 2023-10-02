@@ -9,7 +9,10 @@ public interface SupplierService {
 
     Supplier getById(int id);
 
-    Supplier getByName(String name);
+    List<Supplier> getByName(String name);
 
     List<Supplier> getSuppliers();
+    Supplier getByEmailOrPhone(String email,String phone);
+    Supplier getByPhone(String phone);
+    Supplier getByEmail(String email);
 }

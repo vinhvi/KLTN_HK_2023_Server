@@ -18,7 +18,6 @@ public class OrderDetail {
     private int id;
     private Date date;
     private int quantity;
-    private double total;
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
