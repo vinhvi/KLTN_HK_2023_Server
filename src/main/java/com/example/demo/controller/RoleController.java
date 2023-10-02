@@ -36,20 +36,25 @@ public class RoleController {
     @GetMapping("/getByName/{name}")
     public ResponseEntity<?> getByName(@PathVariable("name") String name) {
         try {
-            Role role = roleService.getByName(name);
-            if (role == null) {
+            List<Role> roles = roleService.getByName(name);
+            if (roles.isEmpty()) {
                 return ResponseEntity.badRequest().body(name + " not found!");
             }
-            return ResponseEntity.ok().body(role);
+            return ResponseEntity.ok().body(roles);
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
 
     }
+
     @GetMapping("/getList")
     public ResponseEntity<?> getAll() {
         try {
-            return ResponseEntity.ok().body(roleService.getAll());
+            List<Role> roleList = roleService.getAll();
+            if (roleList.isEmpty()) {
+                return ResponseEntity.ok().body(roleList);
+            }
+            return ResponseEntity.ok().body("There are no roles in the database yet");
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }

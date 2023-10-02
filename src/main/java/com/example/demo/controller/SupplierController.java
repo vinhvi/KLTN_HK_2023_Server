@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
@@ -38,7 +37,7 @@ public class SupplierController {
         try {
             List<Supplier> suppliers = supplierService.getSuppliers();
             if (suppliers.isEmpty()) {
-                return ResponseEntity.ok().body("There are no products in the database yet");
+                return ResponseEntity.ok().body("There are no suppliers in the database yet");
             }
             return ResponseEntity.ok().body(suppliers);
         } catch (Exception exception) {
