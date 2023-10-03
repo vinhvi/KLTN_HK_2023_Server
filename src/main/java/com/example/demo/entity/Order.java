@@ -27,5 +27,5 @@ public class Order {
     private Customer customer;
     @OneToMany(mappedBy = "order")
     private List<OrderDetail> orderDetails;
-    private double totalMoney;
+
 }
