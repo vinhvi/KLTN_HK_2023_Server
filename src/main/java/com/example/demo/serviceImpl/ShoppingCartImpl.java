@@ -23,11 +23,20 @@ public class ShoppingCartImpl implements ShoppingCartService {
 
     @Override
     public ShoppingCart getById(int id) {
-        return shoppingCartRepo.findShoppingCartById(id);
+        return checkAndUpdate(shoppingCartRepo.findShoppingCartById(id));
     }
 
     @Override
     public ShoppingCart getByCustomer(Customer customer) {
-        return shoppingCartRepo.findShoppingCartByCustomer(customer);
+        return checkAndUpdate(shoppingCartRepo.findShoppingCartByCustomer(customer));
+    }
+
+    private ShoppingCart checkAndUpdate(ShoppingCart shoppingCart) {
+        int sl = shoppingCart.getShoppingCartDetails().size();
+        if (sl != shoppingCart.getQuantity()) {
+            shoppingCart.setQuantity(sl);
+            shoppingCartRepo.save(shoppingCart);
+        }
+        return shoppingCart;
     }
 }

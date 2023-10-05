@@ -7,4 +7,5 @@ public interface ShoppingCartService {
     ShoppingCart saveOrUpdate(ShoppingCart shoppingCart);
     ShoppingCart getById(int id);
     ShoppingCart getByCustomer(Customer customer);
+
 }

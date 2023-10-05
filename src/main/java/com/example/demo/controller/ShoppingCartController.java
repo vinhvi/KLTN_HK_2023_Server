@@ -34,7 +34,7 @@ public class ShoppingCartController {
             if (shoppingCart == null) {
                 return ResponseEntity.badRequest().body(id + " not found !!");
             }
-            return ResponseEntity.ok().body(checkAndUpdate(shoppingCart));
+            return ResponseEntity.ok().body(shoppingCart);
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
@@ -47,18 +47,10 @@ public class ShoppingCartController {
             if (shoppingCart == null) {
                 return ResponseEntity.badRequest().body(customer.getId() + " not found !!");
             }
-            return ResponseEntity.ok().body(checkAndUpdate(shoppingCart));
+            return ResponseEntity.ok().body(shoppingCart);
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
     }
 
-    private ShoppingCart checkAndUpdate(ShoppingCart shoppingCart) {
-        int sl = shoppingCart.getShoppingCartDetails().size();
-        if (sl != shoppingCart.getQuantity()) {
-            shoppingCart.setQuantity(sl);
-            service.saveOrUpdate(shoppingCart);
-        }
-        return shoppingCart;
-    }
 }
