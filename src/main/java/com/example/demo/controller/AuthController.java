@@ -46,7 +46,7 @@ public class AuthController {
         try {
             String token = accountService.login(account);
             if (token.equals("")) {
-                return ResponseEntity.ok().body("incorrect email or incorrect password!!");
+                return ResponseEntity.badRequest().body("incorrect email or incorrect password!!");
             }
             Customer customer = customerService.getByEmail(account.getEmail());
             if (customer != null) {
