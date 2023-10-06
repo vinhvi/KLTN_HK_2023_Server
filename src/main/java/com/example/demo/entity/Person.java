@@ -5,13 +5,14 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @MappedSuperclass
 @Data
 @Getter
 @Setter
-public abstract class Person {
+public abstract class Person implements Serializable {
     @Id
     private String id;
     private String firstName;

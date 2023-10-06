@@ -9,7 +9,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Customer extends Person {
+public class Customer extends Person  {
     private String customerType;
 
 

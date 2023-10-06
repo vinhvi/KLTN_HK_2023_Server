@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.DataBean.ShoppingCartDataBean;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.ShoppingCart;
 import com.example.demo.service.ShoppingCartService;
@@ -28,9 +29,10 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/getById/{id}")
-    public ResponseEntity<?> getByName(@PathVariable("id") int id) {
+    public ResponseEntity<?> getById(@PathVariable("id") int id) {
         try {
-            ShoppingCart shoppingCart = service.getById(id);
+            ShoppingCartDataBean shoppingCart = service.getById(id);
+            System.out.println("aaaaa: " + shoppingCart);
             if (shoppingCart == null) {
                 return ResponseEntity.badRequest().body(id + " not found !!");
             }
@@ -41,9 +43,9 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/getByCustomer")
-    public ResponseEntity<?> getByName(@RequestBody Customer customer) {
+    public ResponseEntity<?> getByCustomer(@RequestBody Customer customer) {
         try {
-            ShoppingCart shoppingCart = service.getByCustomer(customer);
+            ShoppingCartDataBean shoppingCart = service.getByCustomer(customer);
             if (shoppingCart == null) {
                 return ResponseEntity.badRequest().body(customer.getId() + " not found !!");
             }
