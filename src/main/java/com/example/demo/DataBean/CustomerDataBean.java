@@ -26,5 +26,5 @@ public class CustomerDataBean {
     private Account account;
     private String customerType;
     private String token;
-    private ShoppingCart shoppingCart;
+    private ShoppingCartDataBean shoppingCart;
 }
