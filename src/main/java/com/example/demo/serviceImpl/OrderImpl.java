@@ -23,6 +23,9 @@ public class OrderImpl implements OrderService {
     @Override
     public Order saveOrUpdate(Order order) {
         order.setId(randomOrderId());
+        Date currentDate = new Date();
+        order.setDate(currentDate);
+        order.setStatusOrder("Đang xử lý");
         return orderRepo.save(order);
     }
 
