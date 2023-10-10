@@ -20,6 +20,7 @@ public class Order implements Serializable {
     private Date date;
     private String statusOrder;
     private String note;
+    private int quantity;
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
