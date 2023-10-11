@@ -42,7 +42,7 @@ public class OrderDetailController {
     @GetMapping("/getByOrder/{orderId}")
     public ResponseEntity<?> getByOrder(@PathVariable("orderId") String orderId) {
         try {
-            Order order = orderService.getById(orderId);
+            Order order = orderService.getOrderById(orderId);
             if (order != null) {
                 List<OrderDetail> orderDetails = orderDetailService.getByOrder(order);
                 return ResponseEntity.ok().body(orderDetails);

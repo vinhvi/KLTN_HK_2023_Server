@@ -29,7 +29,7 @@ public class OrderController {
     @GetMapping("/getOrderById/{id}")
     public ResponseEntity<?> getById(@PathVariable("id") String orderId) {
         try {
-            return ResponseEntity.ok().body(orderService.getById(orderId));
+            return ResponseEntity.ok().body(orderService.getOrderById(orderId));
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }

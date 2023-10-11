@@ -25,5 +25,4 @@ public class ShoppingCart implements Serializable {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-
 }

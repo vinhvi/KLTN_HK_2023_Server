@@ -11,10 +11,8 @@ import java.util.List;
 public interface OrderService {
     Order saveOrUpdate(Order order);
 
-    Order getById(String id);
-
     List<Order> getOrderByCustomer(Customer customer);
-
+    Order getOrderById(String id);
     List<Order> getAll();
 
     List<Order> getByDate(Date date);

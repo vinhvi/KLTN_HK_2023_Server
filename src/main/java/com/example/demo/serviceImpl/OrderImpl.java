@@ -2,6 +2,8 @@ package com.example.demo.serviceImpl;
 
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.Order;
+import com.example.demo.entity.OrderDetail;
+import com.example.demo.repository.OrderDetailRepo;
 import com.example.demo.repository.OrderRepo;
 import com.example.demo.service.OrderService;
 import jakarta.transaction.Transactional;
@@ -9,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -19,6 +22,7 @@ import java.util.Random;
 @Slf4j
 public class OrderImpl implements OrderService {
     private final OrderRepo orderRepo;
+    private final OrderDetailRepo orderDetailRepo;
 
     @Override
     public Order saveOrUpdate(Order order) {
@@ -26,17 +30,25 @@ public class OrderImpl implements OrderService {
         Date currentDate = new Date();
         order.setDate(currentDate);
         order.setStatusOrder("Đang xử lý");
-        return orderRepo.save(order);
-    }
-
-    @Override
-    public Order getById(String id) {
-        return orderRepo.findOrderById(id);
+        Order orderSaved = orderRepo.save(order);
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        for (OrderDetail orderDetail : order.getOrderDetails()) {
+            orderDetail.setOrder(orderSaved);
+            orderDetail.setDate(currentDate);
+            orderDetails.add(orderDetailRepo.save(orderDetail));
+        }
+        orderSaved.setOrderDetails(orderDetails);
+        return orderSaved;
     }
 
     @Override
     public List<Order> getOrderByCustomer(Customer customer) {
         return orderRepo.findOrderByCustomer(customer);
+    }
+
+    @Override
+    public Order getOrderById(String id) {
+        return orderRepo.findOrderById(id);
     }
 
     @Override
@@ -70,4 +82,5 @@ public class OrderImpl implements OrderService {
         }
         return newId;
     }
+
 }
