@@ -1,5 +1,6 @@
 package com.example.demo.serviceImpl;
 
+import com.example.demo.DataBean.ShoppingCartDataBean;
 import com.example.demo.entity.Avatar;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.ShoppingCart;
@@ -37,12 +38,16 @@ public class CustomerImpl implements CustomerService {
             customer.setAvatar(avatarService.addAvatar(avatar));
         }
         Customer customerSave = customerRepo.save(customer);
-        ShoppingCart shoppingCart = new ShoppingCart();
-        Calendar calendar = Calendar.getInstance();
-        Date date = calendar.getTime();
-        shoppingCart.setDate(date);
-        shoppingCart.setCustomer(customerSave);
-        shoppingCartService.saveOrUpdate(shoppingCart);
+        ShoppingCartDataBean shoppingCartDataBean = shoppingCartService.getByCustomer(customer);
+        if (shoppingCartDataBean == null) {
+            ShoppingCart shoppingCart = new ShoppingCart();
+            Calendar calendar = Calendar.getInstance();
+            Date date = calendar.getTime();
+            shoppingCart.setDate(date);
+            shoppingCart.setCustomer(customerSave);
+            shoppingCartService.saveOrUpdate(shoppingCart);
+        }
+
         return customerSave;
     }
 
