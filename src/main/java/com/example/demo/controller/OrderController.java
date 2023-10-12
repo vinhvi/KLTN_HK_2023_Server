@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -26,6 +27,19 @@ public class OrderController {
         }
     }
 
+    @GetMapping("/getAllOrder")
+    public ResponseEntity<?> getAllOrder() {
+        try {
+            List<Order> orderList = orderService.getAll();
+            if (orderList.isEmpty()) {
+                return ResponseEntity.badRequest().body("not found!!");
+            }
+            return ResponseEntity.ok().body(orderList);
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
+        }
+    }
+
     @GetMapping("/getOrderById/{id}")
     public ResponseEntity<?> getById(@PathVariable("id") String orderId) {
         try {
@@ -39,6 +53,19 @@ public class OrderController {
     public ResponseEntity<?> randomId() {
         try {
             return ResponseEntity.ok().body(orderService.randomOrderId());
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
+        }
+    }
+
+    @GetMapping("/getByDate")
+    public ResponseEntity<?> getOrderByDate(@RequestBody Date date) {
+        try {
+            List<Order> orderList = orderService.getByDate(date);
+            if (orderList.isEmpty()) {
+                return ResponseEntity.badRequest().body("not found!!");
+            }
+            return ResponseEntity.ok().body(orderList);
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }

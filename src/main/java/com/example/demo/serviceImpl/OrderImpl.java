@@ -26,6 +26,28 @@ public class OrderImpl implements OrderService {
 
     @Override
     public Order saveOrUpdate(Order order) {
+        if (order.getId() != null) {
+            Order orderUpdate = orderRepo.findOrderById(order.getId());
+            if (order.getCustomer() != null) {
+                orderUpdate.setCustomer(order.getCustomer());
+            }
+            if (order.getEmployee() != null) {
+                orderUpdate.setEmployee(order.getEmployee());
+            }
+            if (order.getStatusOrder() != null) {
+                orderUpdate.setStatusOrder(order.getStatusOrder());
+            }
+            if (order.getOrderDetails() != null) {
+                orderUpdate.setOrderDetails(order.getOrderDetails());
+            }
+            if (order.getDate() != null) {
+                orderUpdate.setDate(order.getDate());
+            }
+            if (order.getNote() != null) {
+                orderUpdate.setNote(order.getNote());
+            }
+            return orderRepo.save(orderUpdate);
+        }
         order.setId(randomOrderId());
         Date currentDate = new Date();
         order.setDate(currentDate);
