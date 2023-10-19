@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -20,12 +22,16 @@ public class CartItemImpl implements CartItemService {
 
     @Override
     public CartItem saveOrUpDate(CartItem cartItem) {
+        Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
         CartItem cartItemCheck = cartItemRepo.findShoppingCartDetailByProductAndAndShoppingCart(cartItem.getProduct(), cartItem.getShoppingCart());
         if (cartItemCheck != null) {
             int quantityUpdate = cartItemCheck.getQuantity() + 1;
             cartItemCheck.setQuantity(quantityUpdate);
+            cartItemCheck.setDate(date);
             return cartItemRepo.save(cartItemCheck);
         }
+        cartItem.setDate(date);
         return cartItemRepo.save(cartItem);
     }
 
