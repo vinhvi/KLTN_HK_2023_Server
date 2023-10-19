@@ -24,8 +24,10 @@ public class CartItemImpl implements CartItemService {
     public CartItem saveOrUpDate(CartItem cartItem) {
         Calendar calendar = Calendar.getInstance();
         Date date = calendar.getTime();
+
         CartItem cartItemCheck = cartItemRepo.findShoppingCartDetailByProductAndAndShoppingCart(cartItem.getProduct(), cartItem.getShoppingCart());
         if (cartItemCheck != null) {
+            cartItemCheck.setQuantity(cartItem.getQuantity());
             cartItemCheck.setDate(date);
             return cartItemRepo.save(cartItemCheck);
         }
