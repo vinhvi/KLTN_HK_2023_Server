@@ -26,8 +26,6 @@ public class CartItemImpl implements CartItemService {
         Date date = calendar.getTime();
         CartItem cartItemCheck = cartItemRepo.findShoppingCartDetailByProductAndAndShoppingCart(cartItem.getProduct(), cartItem.getShoppingCart());
         if (cartItemCheck != null) {
-            int quantityUpdate = cartItemCheck.getQuantity() + 1;
-            cartItemCheck.setQuantity(quantityUpdate);
             cartItemCheck.setDate(date);
             return cartItemRepo.save(cartItemCheck);
         }
