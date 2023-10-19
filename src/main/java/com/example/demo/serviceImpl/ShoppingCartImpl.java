@@ -3,8 +3,8 @@ package com.example.demo.serviceImpl;
 import com.example.demo.DataBean.ShoppingCartDataBean;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.ShoppingCart;
-import com.example.demo.entity.ShoppingCartDetail;
-import com.example.demo.repository.ShoppingCartDetailRepo;
+import com.example.demo.entity.CartItem;
+import com.example.demo.repository.CartItemRepo;
 import com.example.demo.repository.ShoppingCartRepo;
 import com.example.demo.service.ShoppingCartService;
 import jakarta.transaction.Transactional;
@@ -20,7 +20,7 @@ import java.util.List;
 @Slf4j
 public class ShoppingCartImpl implements ShoppingCartService {
     private final ShoppingCartRepo shoppingCartRepo;
-    private final ShoppingCartDetailRepo shoppingCartDetailRepo;
+    private final CartItemRepo cartItemRepo;
 
     @Override
     public ShoppingCart saveOrUpdate(ShoppingCart shoppingCart) {
@@ -44,16 +44,16 @@ public class ShoppingCartImpl implements ShoppingCartService {
 
     private ShoppingCartDataBean checkAndUpdate(ShoppingCart shoppingCart) {
         ShoppingCartDataBean shoppingCartDataBean = new ShoppingCartDataBean();
-        List<ShoppingCartDetail> shoppingCartDetails = shoppingCartDetailRepo.findShoppingCartDetailByShoppingCart(shoppingCart);
-        if (shoppingCartDetails.isEmpty()) {
+        List<CartItem> cartItems = cartItemRepo.findShoppingCartDetailByShoppingCart(shoppingCart);
+        if (cartItems.isEmpty()) {
             shoppingCart.setQuantity(0);
         }
-        int sl = shoppingCartDetails.size();
+        int sl = cartItems.size();
         if (sl != shoppingCart.getQuantity()) {
             shoppingCart.setQuantity(sl);
         }
         shoppingCartRepo.save(shoppingCart);
-        shoppingCartDataBean.setShoppingCartDetails(shoppingCartDetails);
+        shoppingCartDataBean.setCartItems(cartItems);
         shoppingCartDataBean.setId(shoppingCart.getId());
         shoppingCartDataBean.setDate(shoppingCart.getDate());
         shoppingCartDataBean.setCustomer(shoppingCart.getCustomer());

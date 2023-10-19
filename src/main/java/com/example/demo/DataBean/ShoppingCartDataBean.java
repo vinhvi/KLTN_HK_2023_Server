@@ -1,8 +1,7 @@
 package com.example.demo.DataBean;
 
 import com.example.demo.entity.Customer;
-import com.example.demo.entity.ShoppingCartDetail;
-import jakarta.persistence.*;
+import com.example.demo.entity.CartItem;
 import lombok.*;
 
 import java.util.Date;
@@ -19,5 +18,5 @@ public class ShoppingCartDataBean {
     private Date date;
     private int quantity;
     private Customer customer;
-    private List<ShoppingCartDetail> shoppingCartDetails;
+    private List<CartItem> cartItems;
 }

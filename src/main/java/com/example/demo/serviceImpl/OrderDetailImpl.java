@@ -3,6 +3,8 @@ package com.example.demo.serviceImpl;
 import com.example.demo.entity.Order;
 import com.example.demo.entity.OrderDetail;
 import com.example.demo.repository.OrderDetailRepo;
+import com.example.demo.repository.CartItemRepo;
+import com.example.demo.service.CartItemService;
 import com.example.demo.service.OrderDetailService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -17,9 +19,10 @@ import java.util.List;
 @Slf4j
 public class OrderDetailImpl implements OrderDetailService {
     private final OrderDetailRepo orderDetailRepo;
-
+    private final CartItemService cartItemService;
     @Override
     public OrderDetail saveOrUpdate(OrderDetail orderDetail) {
+
         return orderDetailRepo.save(orderDetail);
     }
 
