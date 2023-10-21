@@ -36,6 +36,20 @@ public class CartItemImpl implements CartItemService {
     }
 
     @Override
+    public CartItem addToCart(CartItem cartItem) {
+        Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        CartItem cartItemCheck = cartItemRepo.findShoppingCartDetailByProductAndAndShoppingCart(cartItem.getProduct(), cartItem.getShoppingCart());
+        if (cartItemCheck != null) {
+            cartItemCheck.setQuantity(cartItemCheck.getQuantity() + cartItem.getQuantity());
+            cartItemCheck.setDate(date);
+            return cartItemRepo.save(cartItemCheck);
+        }
+        cartItem.setDate(date);
+        return cartItemRepo.save(cartItem);
+    }
+
+    @Override
     public Boolean remove(int id) {
         try {
             CartItem cartItem = cartItemRepo.findShoppingCartDetailById(id);

@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface CartItemService {
     CartItem saveOrUpDate(CartItem cartItem);
+    CartItem addToCart(CartItem cartItem);
     Boolean remove(int id);
     CartItem getById(int id);
     List<CartItem> getByCart(ShoppingCart shoppingCart);

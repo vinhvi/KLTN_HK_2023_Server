@@ -30,6 +30,19 @@ public class CartItemController {
         }
     }
 
+    @PostMapping("/addToCart")
+    public ResponseEntity<?> addToCart(@RequestBody CartItem cartItem) {
+        try {
+            CartItem check = cartDetailService.addToCart(cartItem);
+            if (check == null) {
+                return ResponseEntity.badRequest().body("Failed !!");
+            }
+            return ResponseEntity.ok().body(check);
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
+        }
+    }
+
     @GetMapping("/getById/{id}")
     public ResponseEntity<?> getById(@PathVariable("id") int id) {
         try {
