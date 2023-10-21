@@ -6,6 +6,7 @@ import com.example.demo.entity.OrderDetail;
 import com.example.demo.entity.Product;
 import com.example.demo.repository.OrderDetailRepo;
 import com.example.demo.repository.OrderRepo;
+import com.example.demo.service.OrderDetailService;
 import com.example.demo.service.OrderService;
 import com.example.demo.service.ProductService;
 import jakarta.transaction.Transactional;
@@ -24,11 +25,11 @@ import java.util.Random;
 @Slf4j
 public class OrderImpl implements OrderService {
     private final OrderRepo orderRepo;
-    private final OrderDetailRepo orderDetailRepo;
+    private final OrderDetailService orderDetailService;
     private final ProductService productService;
 
     @Override
-    public Order saveOrUpdate(Order order) {
+    public Order saveOrUpdate(int idCart,Order order) {
         if (order.getId() != null) {
             Order orderUpdate = orderRepo.findOrderById(order.getId());
             if (order.getCustomer() != null) {
@@ -60,7 +61,7 @@ public class OrderImpl implements OrderService {
         for (OrderDetail orderDetail : order.getOrderDetails()) {
             orderDetail.setOrder(orderSaved);
             orderDetail.setDate(currentDate);
-            orderDetails.add(orderDetailRepo.save(orderDetail));
+            orderDetails.add(orderDetailService.saveOrUpdate(idCart,orderDetail));
         }
         orderSaved.setOrderDetails(orderDetails);
         for (OrderDetail orderDetail : order.getOrderDetails()) {
