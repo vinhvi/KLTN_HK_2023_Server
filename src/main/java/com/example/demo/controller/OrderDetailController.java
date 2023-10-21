@@ -17,10 +17,10 @@ public class OrderDetailController {
     private final OrderDetailService orderDetailService;
     private final OrderService orderService;
 
-    @PostMapping("/saveOrUpdate")
-    public ResponseEntity<?> saveOrUpdate(@RequestBody OrderDetail orderDetail) {
+    @PostMapping("/saveOrUpdate/{idCart}")
+    public ResponseEntity<?> saveOrUpdate(@RequestBody OrderDetail orderDetail, @PathVariable("idCart") int idCart) {
         try {
-            return ResponseEntity.ok().body(orderDetailService.saveOrUpdate(orderDetail));
+            return ResponseEntity.ok().body(orderDetailService.saveOrUpdate(idCart, orderDetail));
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
