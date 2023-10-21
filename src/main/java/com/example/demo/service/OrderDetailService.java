@@ -6,7 +6,7 @@ import com.example.demo.entity.OrderDetail;
 import java.util.List;
 
 public interface OrderDetailService {
-    OrderDetail saveOrUpdate(OrderDetail orderDetail);
+    OrderDetail saveOrUpdate(int idCart,OrderDetail orderDetail);
 
     List<OrderDetail> getByOrder(Order order);
 

@@ -1,5 +1,6 @@
 package com.example.demo.serviceImpl;
 
+import com.example.demo.entity.Product;
 import com.example.demo.entity.ShoppingCart;
 import com.example.demo.entity.CartItem;
 import com.example.demo.repository.CartItemRepo;
@@ -24,7 +25,6 @@ public class CartItemImpl implements CartItemService {
     public CartItem saveOrUpDate(CartItem cartItem) {
         Calendar calendar = Calendar.getInstance();
         Date date = calendar.getTime();
-
         CartItem cartItemCheck = cartItemRepo.findShoppingCartDetailByProductAndAndShoppingCart(cartItem.getProduct(), cartItem.getShoppingCart());
         if (cartItemCheck != null) {
             cartItemCheck.setQuantity(cartItem.getQuantity());
@@ -54,6 +54,11 @@ public class CartItemImpl implements CartItemService {
     @Override
     public List<CartItem> getByCart(ShoppingCart shoppingCart) {
         return cartItemRepo.findShoppingCartDetailByShoppingCart(shoppingCart);
+    }
+
+    @Override
+    public CartItem getByProductAndCart(Product product, ShoppingCart shoppingCart) {
+        return cartItemRepo.findShoppingCartDetailByProductAndAndShoppingCart(product, shoppingCart);
     }
 }
 

@@ -3,9 +3,11 @@ package com.example.demo.serviceImpl;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.Order;
 import com.example.demo.entity.OrderDetail;
+import com.example.demo.entity.Product;
 import com.example.demo.repository.OrderDetailRepo;
 import com.example.demo.repository.OrderRepo;
 import com.example.demo.service.OrderService;
+import com.example.demo.service.ProductService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,7 @@ import java.util.Random;
 public class OrderImpl implements OrderService {
     private final OrderRepo orderRepo;
     private final OrderDetailRepo orderDetailRepo;
+    private final ProductService productService;
 
     @Override
     public Order saveOrUpdate(Order order) {
@@ -60,9 +63,13 @@ public class OrderImpl implements OrderService {
             orderDetails.add(orderDetailRepo.save(orderDetail));
         }
         orderSaved.setOrderDetails(orderDetails);
+        for (OrderDetail orderDetail : order.getOrderDetails()) {
+            Product product = productService.getById(orderDetail.getProduct().getId());
+            product.setQuantity(product.getQuantity() - orderDetail.getQuantity());
+            productService.saveOrUpdate(product);
+        }
         return orderSaved;
     }
-
 
 
     @Override
