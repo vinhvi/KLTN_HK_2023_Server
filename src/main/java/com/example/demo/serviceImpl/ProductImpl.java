@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -42,6 +44,11 @@ public class ProductImpl implements ProductService {
 
     @Override
     public Product saveOrUpdate(Product product) {
+        if (product.getId() == null){
+            Date currentDate = new Date();
+            product.setImportDate(currentDate);
+            product.setId(randomId());
+        }
         return productRepo.save(product);
     }
 
@@ -65,5 +72,17 @@ public class ProductImpl implements ProductService {
             }
         }
         return newId;
+    }
+
+    @Override
+    public List<Product> listNeedUpdate() {
+        List<Product> productListNeedUpdate = new ArrayList<>();
+        for (Product product:productRepo.findAll()) {
+            if (product.getImageProducts() == null || product.getProductName() == null||product.getBrand()==null||product.getDescription()==null
+                    ||product.getPrice()==0||product.getSpecifications()==null){
+                productListNeedUpdate.add(product);
+            }
+        }
+        return productListNeedUpdate;
     }
 }

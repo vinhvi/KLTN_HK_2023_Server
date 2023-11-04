@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface OrderService {
     Order saveOrUpdate(int idCart,Order order);
-
+    List<Order> listConfirm();
     List<Order> getOrderByCustomer(Customer customer);
     Order getOrderById(String id);
     List<Order> getAll();

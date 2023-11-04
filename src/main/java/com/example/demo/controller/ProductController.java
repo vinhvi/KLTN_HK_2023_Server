@@ -75,4 +75,17 @@ public class ProductController {
         }
 
     }
+
+    @GetMapping("/getListUpdate")
+    public ResponseEntity<?> getListUpdate(){
+        try {
+            List<Product> productList = productService.listNeedUpdate();
+            if (productList == null){
+                return ResponseEntity.badRequest().body("null !!");
+            }
+            return ResponseEntity.ok().body(productList);
+        }catch (Exception exception){
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
+        }
+    }
 }

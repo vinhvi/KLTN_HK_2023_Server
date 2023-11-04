@@ -12,4 +12,5 @@ public interface ProductService {
     Product getById(String id);
     Product saveOrUpdate(Product product);
     String randomId();
+    List<Product> listNeedUpdate();
 }

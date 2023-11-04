@@ -29,14 +29,10 @@ public class Product implements Serializable {
 
     private int quantity;
     private double price;
-    private double priceImport;
     @ManyToOne
     @JoinColumn(name = "categories_id")
     private Category category;
 
-    @ManyToOne
-    @JoinColumn(name = "suppliers_id")
-    private Supplier supplier;
 
     @OneToMany(mappedBy = "product")
     private List<ProductSpecification> specifications;

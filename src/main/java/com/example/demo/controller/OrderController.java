@@ -5,9 +5,11 @@ import com.example.demo.entity.Order;
 import com.example.demo.service.CustomerService;
 import com.example.demo.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -54,6 +56,18 @@ public class OrderController {
         try {
             return ResponseEntity.ok().body(orderService.randomOrderId());
         } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
+        }
+    }
+    @GetMapping("/getListUpdate")
+    public  ResponseEntity<?> getListUpdate(){
+        try {
+            List<Order> orderList = orderService.listConfirm();
+            if (orderList==null){
+                return ResponseEntity.badRequest().body("null");
+            }
+            return ResponseEntity.ok().body(orderList);
+        }catch (Exception exception){
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
     }

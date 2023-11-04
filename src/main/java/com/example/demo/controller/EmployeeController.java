@@ -4,10 +4,10 @@ import com.example.demo.entity.Employee;
 import com.example.demo.service.EmployeeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,12 +17,33 @@ public class EmployeeController {
 
     @PostMapping("/createOrUpdate")
     public ResponseEntity<?> create(@RequestBody Employee employee) {
-        Employee employee1 = employeeService.createEmployee(employee);
-        if (employee1 == null) {
-            return ResponseEntity.badRequest().body("error !!");
+        try {
+            return ResponseEntity.ok().body(employeeService.createEmployee(employee));
+        }catch (Exception exception){
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
-        return ResponseEntity.ok().body(employee1);
     }
 
+    @GetMapping("/getAll")
+    public ResponseEntity<?> getAllEmployee(){
+        try {
+            List<Employee> employees = employeeService.getAll();
+            return ResponseEntity.ok().body(Objects.requireNonNullElse(employees, "There are no employees in the database yet"));
+        }catch (Exception exception){
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
+        }
+    }
+    @GetMapping("/getByEmailOrPhone/{key}")
+    public ResponseEntity<?> getByEmailOrPhone(@PathVariable("key") String key){
+        try {
+            Employee employee = employeeService.getByEmailOrPhone(key);
+            if (employee == null){
+                return ResponseEntity.badRequest().body(key +  " not found!!");
+            }
+            return ResponseEntity.ok().body(employee);
+        }catch (Exception exception){
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
+        }
+    }
 
 }

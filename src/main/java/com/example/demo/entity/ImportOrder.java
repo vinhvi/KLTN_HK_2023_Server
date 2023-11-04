@@ -18,8 +18,10 @@ public class ImportOrder implements Serializable {
     @Id
     private String id;
     private Date date;
-    private int quantity;
-    private double totalMoney;
+
+    @ManyToOne
+    @JoinColumn(name = "suppliers_id")
+    private Supplier supplier;
 
     @ManyToOne
     @JoinColumn(name = "employees_id")

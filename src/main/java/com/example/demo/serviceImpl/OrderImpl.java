@@ -12,6 +12,7 @@ import com.example.demo.service.ProductService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -70,6 +71,17 @@ public class OrderImpl implements OrderService {
             productService.saveOrUpdate(product);
         }
         return orderSaved;
+    }
+
+    @Override
+    public List<Order> listConfirm() {
+        List<Order> orders = new ArrayList<>();
+        for (Order order:orderRepo.findAll()) {
+            if (order.getEmployee() == null||order.getStatusOrder()==null||order.getStatusOrder().equals("1")||order.getStatusOrder().equals("2")){
+                orders.add(order);
+            }
+        }
+        return orders;
     }
 
 
