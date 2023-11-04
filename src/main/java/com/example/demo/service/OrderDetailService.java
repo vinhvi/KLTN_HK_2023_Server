@@ -9,7 +9,7 @@ public interface OrderDetailService {
     OrderDetail saveOrUpdate(int idCart,OrderDetail orderDetail);
 
     List<OrderDetail> getByOrder(Order order);
-
+    OrderDetail createNow(OrderDetail orderDetail);
     OrderDetail getById(int id);
 
     void deleteOrderDetail(OrderDetail orderDetail);

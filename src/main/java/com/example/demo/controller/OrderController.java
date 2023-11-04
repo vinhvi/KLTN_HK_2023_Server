@@ -5,11 +5,9 @@ import com.example.demo.entity.Order;
 import com.example.demo.service.CustomerService;
 import com.example.demo.service.OrderService;
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +26,14 @@ public class OrderController {
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
     }
-
+    @PostMapping("/createNow")
+    public ResponseEntity<?> createNow(@RequestBody Order order) {
+        try {
+            return ResponseEntity.ok().body(orderService.createNow(order));
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
+        }
+    }
     @GetMapping("/getAllOrder")
     public ResponseEntity<?> getAllOrder() {
         try {

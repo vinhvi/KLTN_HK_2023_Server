@@ -38,6 +38,14 @@ public class OrderDetailImpl implements OrderDetailService {
     }
 
     @Override
+    public OrderDetail createNow(OrderDetail orderDetail) {
+        Product product = productService.getById(orderDetail.getProduct().getId());
+        product.setQuantity(product.getQuantity() - orderDetail.getQuantity());
+        productService.saveOrUpdate(product);
+        return orderDetailRepo.save(orderDetail);
+    }
+
+    @Override
     public OrderDetail getById(int id) {
         return orderDetailRepo.findOrderDetailById(id);
     }

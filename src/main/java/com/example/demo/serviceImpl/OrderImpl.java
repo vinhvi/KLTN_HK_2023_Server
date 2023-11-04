@@ -28,7 +28,6 @@ public class OrderImpl implements OrderService {
     private final OrderRepo orderRepo;
     private final OrderDetailService orderDetailService;
     private final ProductService productService;
-
     @Override
     public Order saveOrUpdate(int idCart,Order order) {
         if (order.getId() != null) {
@@ -56,7 +55,7 @@ public class OrderImpl implements OrderService {
         order.setId(randomOrderId());
         Date currentDate = new Date();
         order.setDate(currentDate);
-        order.setStatusOrder("Đang xử lý");
+        order.setStatusOrder("1");
         Order orderSaved = orderRepo.save(order);
         List<OrderDetail> orderDetails = new ArrayList<>();
         for (OrderDetail orderDetail : order.getOrderDetails()) {
@@ -125,6 +124,23 @@ public class OrderImpl implements OrderService {
             }
         }
         return newId;
+    }
+
+    @Override
+    public Order createNow(Order order) {
+        order.setId(randomOrderId());
+        Date currentDate = new Date();
+        order.setDate(currentDate);
+        order.setStatusOrder("3");
+        Order orderSaved = orderRepo.save(order);
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        for (OrderDetail orderDetail : order.getOrderDetails()) {
+            orderDetail.setOrder(orderSaved);
+            orderDetail.setDate(currentDate);
+            orderDetails.add(orderDetailService.createNow(orderDetail));
+        }
+        orderSaved.setOrderDetails(orderDetails);
+        return  orderSaved;
     }
 
 }

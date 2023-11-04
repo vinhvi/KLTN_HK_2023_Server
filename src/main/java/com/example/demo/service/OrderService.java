@@ -14,8 +14,7 @@ public interface OrderService {
     List<Order> getOrderByCustomer(Customer customer);
     Order getOrderById(String id);
     List<Order> getAll();
-
     List<Order> getByDate(Date date);
-
     String randomOrderId();
+    Order createNow(Order order);
 }
