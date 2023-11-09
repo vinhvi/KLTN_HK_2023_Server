@@ -32,7 +32,6 @@ public class ShoppingCartController {
     public ResponseEntity<?> getById(@PathVariable("id") int id) {
         try {
             ShoppingCartDataBean shoppingCart = service.getById(id);
-            System.out.println("aaaaa: " + shoppingCart);
             if (shoppingCart == null) {
                 return ResponseEntity.badRequest().body(id + " not found !!");
             }

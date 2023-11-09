@@ -2,8 +2,10 @@ package com.example.demo.serviceImpl;
 
 import com.example.demo.entity.Product;
 import com.example.demo.entity.Category;
+import com.example.demo.entity.ProductSpecification;
 import com.example.demo.repository.ProductRepo;
 import com.example.demo.service.ProductService;
+import com.example.demo.service.ProductSpecificationService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +23,7 @@ import java.util.Random;
 public class ProductImpl implements ProductService {
 
     private final ProductRepo productRepo;
+    private final ProductSpecificationService productSpecificationService;
 
     @Override
     public List<Product> getProducts() {
@@ -48,6 +51,13 @@ public class ProductImpl implements ProductService {
             Date currentDate = new Date();
             product.setImportDate(currentDate);
             product.setId(randomId());
+        }else {
+            List<ProductSpecification> specifications = product.getSpecifications();
+            List<ProductSpecification> specificationsSave = new ArrayList<>();
+            for (ProductSpecification productSpecification:specifications) {
+                    specificationsSave.add(productSpecificationService.saveOrUpdate(productSpecification));
+            }
+            product.setSpecifications(specificationsSave);
         }
         return productRepo.save(product);
     }
