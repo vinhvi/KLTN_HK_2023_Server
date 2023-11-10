@@ -21,7 +21,11 @@ public class OrderController {
     @PostMapping("/saveOrUpdate/{idCart}")
     public ResponseEntity<?> saveOrUpdate(@PathVariable("idCart") int idCart, @RequestBody Order order) {
         try {
-            return ResponseEntity.ok().body(orderService.saveOrUpdate(idCart, order));
+            Order orderSave = orderService.saveOrUpdate(idCart, order);
+            if (orderSave == null) {
+                return ResponseEntity.badRequest().body("Error while save Order because quantity < 0 !!");
+            }
+            return ResponseEntity.ok().body(orderSave);
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
@@ -29,7 +33,11 @@ public class OrderController {
     @PostMapping("/createNow")
     public ResponseEntity<?> createNow(@RequestBody Order order) {
         try {
-            return ResponseEntity.ok().body(orderService.createNow(order));
+            Order orderSave = orderService.createNow(order);
+            if (orderSave == null) {
+                return ResponseEntity.badRequest().body("Error while save Order because quantity < 0 !!");
+            }
+            return ResponseEntity.ok().body(orderSave);
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }

@@ -4,7 +4,6 @@ import com.example.demo.entity.Customer;
 import com.example.demo.entity.Order;
 import com.example.demo.entity.OrderDetail;
 import com.example.demo.entity.Product;
-import com.example.demo.repository.OrderDetailRepo;
 import com.example.demo.repository.OrderRepo;
 import com.example.demo.service.OrderDetailService;
 import com.example.demo.service.OrderService;
@@ -12,7 +11,6 @@ import com.example.demo.service.ProductService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -66,7 +64,11 @@ public class OrderImpl implements OrderService {
         orderSaved.setOrderDetails(orderDetails);
         for (OrderDetail orderDetail : order.getOrderDetails()) {
             Product product = productService.getById(orderDetail.getProduct().getId());
-            product.setQuantity(product.getQuantity() - orderDetail.getQuantity());
+            int slUpdate = product.getQuantity() - orderDetail.getQuantity();
+            if (slUpdate < 0) {
+                return null;
+            }
+            product.setQuantity(slUpdate);
             productService.saveOrUpdate(product);
         }
         return orderSaved;
@@ -131,7 +133,6 @@ public class OrderImpl implements OrderService {
         order.setId(randomOrderId());
         Date currentDate = new Date();
         order.setDate(currentDate);
-        order.setStatusOrder("3");
         Order orderSaved = orderRepo.save(order);
         List<OrderDetail> orderDetails = new ArrayList<>();
         for (OrderDetail orderDetail : order.getOrderDetails()) {

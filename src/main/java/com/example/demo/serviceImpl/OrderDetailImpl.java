@@ -40,7 +40,14 @@ public class OrderDetailImpl implements OrderDetailService {
     @Override
     public OrderDetail createNow(OrderDetail orderDetail) {
         Product product = productService.getById(orderDetail.getProduct().getId());
-        product.setQuantity(product.getQuantity() - orderDetail.getQuantity());
+        if (product.getQuantity() < 0) {
+            return null;
+        }
+        int slUpdate = product.getQuantity() - orderDetail.getQuantity();
+        if (slUpdate < 0) {
+            return null;
+        }
+        product.setQuantity(slUpdate);
         productService.saveOrUpdate(product);
         return orderDetailRepo.save(orderDetail);
     }
