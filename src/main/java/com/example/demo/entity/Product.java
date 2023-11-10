@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Product implements Serializable {
+public class Product {
     @Id
     private String id;
     private String productName;
