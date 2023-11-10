@@ -3,6 +3,7 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +22,12 @@ public class Sale {
     private Date end;
     private int enable;
     private double discount;
-    @OneToMany(mappedBy = "sale")
-    private List<Product> products;
+
+    @ManyToMany
+    @JoinTable(
+            name = "sale_product",
+            joinColumns = @JoinColumn(name = "sale_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private List<Product> products = new ArrayList<>();
 }
