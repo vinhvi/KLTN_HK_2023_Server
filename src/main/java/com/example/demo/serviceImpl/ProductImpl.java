@@ -1,7 +1,7 @@
 package com.example.demo.serviceImpl;
 
-import com.example.demo.entity.Product;
 import com.example.demo.entity.Category;
+import com.example.demo.entity.Product;
 import com.example.demo.entity.ProductSpecification;
 import com.example.demo.repository.ProductRepo;
 import com.example.demo.service.ProductService;
@@ -47,6 +47,7 @@ public class ProductImpl implements ProductService {
 
     @Override
     public Product saveOrUpdate(Product product) {
+        System.out.println("aaa: " + product);
         if (product.getId() == null){
             Date currentDate = new Date();
             product.setImportDate(currentDate);
@@ -55,7 +56,8 @@ public class ProductImpl implements ProductService {
             List<ProductSpecification> specifications = product.getSpecifications();
             List<ProductSpecification> specificationsSave = new ArrayList<>();
             for (ProductSpecification productSpecification:specifications) {
-                    specificationsSave.add(productSpecificationService.saveOrUpdate(productSpecification));
+                productSpecification.setProduct(product);
+                specificationsSave.add(productSpecificationService.saveOrUpdate(productSpecification));
             }
             product.setSpecifications(specificationsSave);
         }
