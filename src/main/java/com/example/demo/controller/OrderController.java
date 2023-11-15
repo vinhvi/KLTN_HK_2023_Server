@@ -116,4 +116,17 @@ public class OrderController {
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
     }
+
+    @PostMapping("/updateStatus")
+    public ResponseEntity<?> updateStatus(@RequestBody List<Order> orderList) {
+        try {
+            List<Order> orders = orderService.update(orderList);
+            if (orders.isEmpty()) {
+                return ResponseEntity.badRequest().body("error");
+            }
+            return ResponseEntity.ok().body("success!");
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
+        }
+    }
 }

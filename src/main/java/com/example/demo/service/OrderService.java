@@ -17,4 +17,5 @@ public interface OrderService {
     List<Order> getByDate(Date date);
     String randomOrderId();
     Order createNow(Order order);
+    List<Order> update(List<Order> orders);
 }

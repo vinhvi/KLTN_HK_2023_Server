@@ -1,10 +1,8 @@
 package com.example.demo.serviceImpl;
 
-import com.example.demo.entity.Customer;
-import com.example.demo.entity.Order;
-import com.example.demo.entity.OrderDetail;
-import com.example.demo.entity.Product;
+import com.example.demo.entity.*;
 import com.example.demo.repository.OrderRepo;
+import com.example.demo.service.EmployeeService;
 import com.example.demo.service.OrderDetailService;
 import com.example.demo.service.OrderService;
 import com.example.demo.service.ProductService;
@@ -26,6 +24,7 @@ public class OrderImpl implements OrderService {
     private final OrderRepo orderRepo;
     private final OrderDetailService orderDetailService;
     private final ProductService productService;
+    private final EmployeeService employeeService;
     @Override
     public Order saveOrUpdate(int idCart,Order order) {
         if (order.getId() != null) {
@@ -141,7 +140,23 @@ public class OrderImpl implements OrderService {
             orderDetails.add(orderDetailService.createNow(orderDetail));
         }
         orderSaved.setOrderDetails(orderDetails);
-        return  orderSaved;
+        return orderSaved;
+    }
+
+    @Override
+    public List<Order> update(List<Order> orders) {
+        List<Order> orderList = new ArrayList<>();
+        for (Order order : orders) {
+            Order orderUpdate = orderRepo.findOrderById(order.getId());
+            Employee employee = employeeService.getById(order.getEmployee().getId());
+            if (orderUpdate.getStatusOrder().equals("1")){
+                orderUpdate.setEmployee(employee);
+            }
+            orderUpdate.setStatusOrder(order.getStatusOrder());
+            Order save = orderRepo.save(orderUpdate);
+            orderList.add(save);
+        }
+        return orderList;
     }
 
 }
