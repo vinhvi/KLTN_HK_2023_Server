@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Customer;
+import com.example.demo.entity.Employee;
 import com.example.demo.entity.Order;
 import com.example.demo.service.CustomerService;
+import com.example.demo.service.EmployeeService;
 import com.example.demo.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ import java.util.List;
 public class OrderController {
     private final OrderService orderService;
     private final CustomerService customerService;
+    private final EmployeeService employeeService;
 
     @PostMapping("/saveOrUpdate/{idCart}")
     public ResponseEntity<?> saveOrUpdate(@PathVariable("idCart") int idCart, @RequestBody Order order) {
@@ -117,10 +120,11 @@ public class OrderController {
         }
     }
 
-    @PostMapping("/updateStatus")
-    public ResponseEntity<?> updateStatus(@RequestBody List<Order> orderList) {
+    @PostMapping("/updateStatus/{idEmployee}")
+    public ResponseEntity<?> updateStatus(@PathVariable("idEmployee") String idEmployee, @RequestBody List<Order> orderList) {
         try {
-            List<Order> orders = orderService.update(orderList);
+            Employee employee = employeeService.getById(idEmployee);
+            List<Order> orders = orderService.update(employee, orderList);
             if (orders.isEmpty()) {
                 return ResponseEntity.badRequest().body("error");
             }

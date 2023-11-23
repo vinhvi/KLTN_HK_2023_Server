@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Customer;
+import com.example.demo.entity.Employee;
 import com.example.demo.entity.Order;
 
 
@@ -17,5 +18,5 @@ public interface OrderService {
     List<Order> getByDate(Date date);
     String randomOrderId();
     Order createNow(Order order);
-    List<Order> update(List<Order> orders);
+    List<Order> update(Employee employee, List<Order> orders);
 }

@@ -144,11 +144,10 @@ public class OrderImpl implements OrderService {
     }
 
     @Override
-    public List<Order> update(List<Order> orders) {
+    public List<Order> update(Employee employee, List<Order> orders) {
         List<Order> orderList = new ArrayList<>();
         for (Order order : orders) {
             Order orderUpdate = orderRepo.findOrderById(order.getId());
-            Employee employee = employeeService.getById(order.getEmployee().getId());
             if (orderUpdate.getStatusOrder().equals("1")){
                 orderUpdate.setEmployee(employee);
             }
