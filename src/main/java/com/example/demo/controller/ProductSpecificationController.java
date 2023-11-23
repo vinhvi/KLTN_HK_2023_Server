@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/v1/productSpecifications")
@@ -47,4 +49,32 @@ public class ProductSpecificationController {
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
     }
+
+    @GetMapping("/getById/{id}")
+    public ResponseEntity<?> getById(@PathVariable("id") int id) {
+        try {
+            ProductSpecification productSpecification = productSpecificationService.getById(id);
+            if (productSpecification == null) {
+                return ResponseEntity.badRequest().body(id + "not found !!");
+            }
+            return ResponseEntity.ok().body(productSpecification);
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
+        }
+    }
+
+    @PostMapping("/updateList/{idProduct}")
+    public ResponseEntity<?> updateList(@PathVariable("idProduct") String idProduct, @RequestBody List<ProductSpecification> productSpecifications) {
+        try {
+            Product product = productService.getById(idProduct);
+            List<ProductSpecification> productSpecificationList = productSpecificationService.updateList(productSpecifications, product);
+            if (productSpecificationList == null) {
+                return ResponseEntity.badRequest().body("Error !!");
+            }
+            return ResponseEntity.ok().body(productSpecificationList);
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
+        }
+    }
+
 }

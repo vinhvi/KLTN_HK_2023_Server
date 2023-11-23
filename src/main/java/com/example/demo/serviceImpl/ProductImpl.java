@@ -47,7 +47,6 @@ public class ProductImpl implements ProductService {
 
     @Override
     public Product saveOrUpdate(Product product) {
-        System.out.println("aaa: " + product);
         if (product.getId() == null){
             Date currentDate = new Date();
             product.setImportDate(currentDate);
