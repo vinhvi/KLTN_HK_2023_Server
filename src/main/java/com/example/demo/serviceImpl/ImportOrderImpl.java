@@ -2,8 +2,6 @@ package com.example.demo.serviceImpl;
 
 import com.example.demo.entity.ImportOrder;
 import com.example.demo.entity.ImportOrderDetail;
-import com.example.demo.entity.Order;
-import com.example.demo.repository.ImportOrderDetailRepo;
 import com.example.demo.repository.ImportOrderRepo;
 import com.example.demo.service.ImportOrderDetailService;
 import com.example.demo.service.ImportOrderService;
