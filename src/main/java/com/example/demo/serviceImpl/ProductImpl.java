@@ -51,13 +51,15 @@ public class ProductImpl implements ProductService {
             Date currentDate = new Date();
             product.setImportDate(currentDate);
             product.setId(randomId());
+            Product productSaved = productRepo.save(product);
             List<ProductSpecification> specifications = product.getSpecifications();
             List<ProductSpecification> specificationsSave = new ArrayList<>();
             for (ProductSpecification productSpecification:specifications) {
-                productSpecification.setProduct(product);
+                productSpecification.setProduct(productSaved);
                 specificationsSave.add(productSpecificationService.saveOrUpdate(productSpecification));
             }
-            product.setSpecifications(specificationsSave);
+            productSaved.setSpecifications(specificationsSave);
+            return productRepo.save(productSaved);
         }else {
             List<ProductSpecification> specifications = product.getSpecifications();
             List<ProductSpecification> specificationsSave = new ArrayList<>();
