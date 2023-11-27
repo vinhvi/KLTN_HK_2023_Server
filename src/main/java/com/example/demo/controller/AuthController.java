@@ -48,6 +48,10 @@ public class AuthController {
             if (token.equals("")) {
                 return ResponseEntity.badRequest().body("incorrect email or incorrect password!!");
             }
+            Account accountLogin = accountService.getByEmail2(account.getEmail());
+            if (!accountLogin.isEnable()){
+                return ResponseEntity.badRequest().body("account not found !!");
+            }
             Customer customer = customerService.getByEmail(account.getEmail());
             if (customer != null) {
                 CustomerDataBean customerDataBean = accountService.customerLogin(token, customer);

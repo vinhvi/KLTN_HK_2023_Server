@@ -6,7 +6,6 @@ import com.example.demo.config.JwtService;
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.Employee;
-import com.example.demo.entity.ShoppingCart;
 import com.example.demo.repository.AccountRepo;
 import com.example.demo.service.AccountService;
 import com.example.demo.service.ShoppingCartService;
@@ -18,6 +17,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,8 +37,18 @@ public class AccountImpl implements AccountService {
     }
 
     @Override
+    public Account saveOrUpdate(Account account) {
+        return accountRepo.save(account);
+    }
+
+    @Override
     public Account getById(Integer id) {
         return accountRepo.findAccountById(id);
+    }
+
+    @Override
+    public Account getByEmail2(String email) {
+        return accountRepo.findAccountByEmail(email);
     }
 
     @Override
@@ -50,6 +60,11 @@ public class AccountImpl implements AccountService {
         String encodedPassword = passwordEncoder.encode(password);
         account.setPassWordA(encodedPassword);
         return accountRepo.save(account);
+    }
+
+    @Override
+    public List<Account> getAll() {
+        return accountRepo.findAll();
     }
 
     @Override

@@ -6,15 +6,16 @@ import com.example.demo.entity.Account;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.Employee;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface AccountService {
     Optional<Account> getByEmail(String email);
-
+    Account saveOrUpdate(Account account);
     Account getById(Integer id);
-
+    Account getByEmail2(String email);
     Account register(Account account);
-
+    List<Account> getAll();
     String login(Account account);
 
     CustomerDataBean customerLogin(String token, Customer customer);
