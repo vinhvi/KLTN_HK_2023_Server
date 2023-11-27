@@ -24,7 +24,7 @@ public class OrderImpl implements OrderService {
     private final OrderRepo orderRepo;
     private final OrderDetailService orderDetailService;
     private final ProductService productService;
-    private final EmployeeService employeeService;
+
     @Override
     public Order saveOrUpdate(int idCart,Order order) {
         if (order.getId() != null) {

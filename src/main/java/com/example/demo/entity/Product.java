@@ -45,4 +45,10 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<PriceList> priceLists;
 
+    @OneToMany(mappedBy = "product")
+    private List<LoHang> loHangs;
+
+    @ManyToMany(mappedBy = "products")
+    private List<Sale> sales = new ArrayList<>();
+
 }

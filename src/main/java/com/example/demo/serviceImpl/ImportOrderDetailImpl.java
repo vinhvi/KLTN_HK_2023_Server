@@ -27,6 +27,7 @@ public class ImportOrderDetailImpl implements ImportOrderDetailService {
             product.setQuantity(product.getQuantity() + importOrderDetail.getQuantity());
             importOrderDetail.setProduct(productService.saveOrUpdate(product));
         }
+
         return repo.save(importOrderDetail);
     }
 

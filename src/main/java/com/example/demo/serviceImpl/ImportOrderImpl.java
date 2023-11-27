@@ -2,9 +2,11 @@ package com.example.demo.serviceImpl;
 
 import com.example.demo.entity.ImportOrder;
 import com.example.demo.entity.ImportOrderDetail;
+import com.example.demo.entity.LoHang;
 import com.example.demo.repository.ImportOrderRepo;
 import com.example.demo.service.ImportOrderDetailService;
 import com.example.demo.service.ImportOrderService;
+import com.example.demo.service.LoHangService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +25,7 @@ public class ImportOrderImpl implements ImportOrderService {
 
     private final ImportOrderRepo importOrderRepo;
     private final ImportOrderDetailService importOrderDetailService;
+    private final LoHangService loHangService;
     @Override
     public ImportOrder saveOrUpdate(ImportOrder importOrder) {
         if (importOrder.getId() == null){
@@ -33,7 +36,12 @@ public class ImportOrderImpl implements ImportOrderService {
             List<ImportOrderDetail> importOrderDetails = new ArrayList<>();
             for (ImportOrderDetail importOrderDetail:importOrder.getImportOrderDetail()) {
                 importOrderDetail.setImportOrder(importOrderSaved);
-                importOrderDetails.add(importOrderDetailService.saveOrUpdate(importOrderDetail));
+                ImportOrderDetail importOrderDetailSaved = importOrderDetailService.saveOrUpdate(importOrderDetail);
+                LoHang loHang = new LoHang();
+                loHang.setQuantity(importOrderDetailSaved.getQuantity());
+                loHang.setProduct(importOrderDetail.getProduct());
+                loHangService.saveOrUpdate(loHang);
+                importOrderDetails.add(importOrderDetailSaved);
             }
             importOrderSaved.setImportOrderDetail(importOrderDetails);
             return importOrderRepo.save(importOrderSaved);

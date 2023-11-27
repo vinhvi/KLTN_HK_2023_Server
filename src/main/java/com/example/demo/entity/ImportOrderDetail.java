@@ -20,9 +20,11 @@ public class ImportOrderDetail implements Serializable {
     private int id;
     private int quantity;
     private double importPrice;
+
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "importOrder_id")
