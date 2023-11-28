@@ -42,19 +42,6 @@ public class LoHangController {
         }
     }
 
-    @GetMapping("/getByImportOrder/{id}")
-    public ResponseEntity<?> getLoHangByImportOrder(@PathVariable("id") String id) {
-        try {
-            ImportOrder importOrder = importOrderService.getById(id);
-            List<LoHang> loHangs = loHangService.getByImportOrder(importOrder);
-            if (loHangs.isEmpty()) {
-                return ResponseEntity.badRequest().body(id + " not found!");
-            }
-            return ResponseEntity.ok().body(loHangs);
-        } catch (Exception exception) {
-            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
-        }
-    }
 
     @GetMapping("/getByProduct/{id}")
     public ResponseEntity<?> getLoHangByProduct(@PathVariable("id") String id) {

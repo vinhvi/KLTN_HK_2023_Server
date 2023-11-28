@@ -13,9 +13,5 @@ import java.util.List;
 public interface LoHangRepo extends JpaRepository<LoHang, String> {
     LoHang findLoHangById(String id);
 
-    LoHang findLoHangByImportOrderDetail(ImportOrderDetail importOrderDetail);
-
-    List<LoHang> findLoHangByImportOrderDetail_ImportOrder(ImportOrder importOrder);
-
     List<LoHang> findLoHangByProduct(Product product);
 }

@@ -17,13 +17,9 @@ public class LoHang {
     private String id;
     private Date date;
     private int quantity;
-    private boolean status;
+    private int status;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "products_id")
     private Product product;
-
-    @ManyToOne
-    @JoinColumn(name = "importOrders_id")
-    private ImportOrderDetail importOrderDetail;
 }

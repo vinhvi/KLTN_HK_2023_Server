@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -41,14 +42,5 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private List<ImageProduct> imageProducts;
-
-    @OneToMany(mappedBy = "product")
-    private List<PriceList> priceLists;
-
-    @OneToMany(mappedBy = "product")
-    private List<LoHang> loHangs;
-
-    @ManyToMany(mappedBy = "products")
-    private List<Sale> sales = new ArrayList<>();
 
 }

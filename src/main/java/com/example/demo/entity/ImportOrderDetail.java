@@ -21,9 +21,9 @@ public class ImportOrderDetail implements Serializable {
     private int quantity;
     private double importPrice;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @OneToOne
+    @JoinColumn(name = "loHangs_id")
+    private LoHang loHang;
 
     @JsonIgnore
     @ManyToOne

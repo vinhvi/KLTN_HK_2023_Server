@@ -15,7 +15,6 @@ public interface LoHangService {
     List<LoHang> getAll();
 
     List<LoHang> getByProduct(Product product);
-    List<LoHang> getByImportOrder(ImportOrder importOrder);
 
     String randomIDLH();
 }

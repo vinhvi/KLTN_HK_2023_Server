@@ -1,9 +1,11 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,14 +22,8 @@ public class Sale {
     private String description;
     private Date start;
     private Date end;
-    private int enable;
+    private String type;
     private double discount;
-
-    @ManyToMany
-    @JoinTable(
-            name = "sale_product",
-            joinColumns = @JoinColumn(name = "sale_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private List<Product> products = new ArrayList<>();
+    @OneToMany(mappedBy = "sales")
+    private List<SaleDetail> saleDetails;
 }

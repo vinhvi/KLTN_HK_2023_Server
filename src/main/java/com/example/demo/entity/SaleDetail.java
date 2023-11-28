@@ -4,26 +4,23 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
-
 @Entity
-@Table(name = "price_lists")
+@Table(name = "sale_details")
 @Data
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PriceList {
-
+public class SaleDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    private Date start;
-    private double price;
-    private boolean enable;
+    private int enable;
+    @ManyToOne
+    @JoinColumn(name = "products_id")
+    private Product product;
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @JoinColumn(name = "sales_id")
+    private Sale sales;
 }

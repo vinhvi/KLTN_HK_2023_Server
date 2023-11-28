@@ -25,7 +25,7 @@ public class ImportOrderImpl implements ImportOrderService {
 
     private final ImportOrderRepo importOrderRepo;
     private final ImportOrderDetailService importOrderDetailService;
-    private final LoHangService loHangService;
+
     @Override
     public ImportOrder saveOrUpdate(ImportOrder importOrder) {
         if (importOrder.getId() == null){
@@ -37,10 +37,6 @@ public class ImportOrderImpl implements ImportOrderService {
             for (ImportOrderDetail importOrderDetail:importOrder.getImportOrderDetail()) {
                 importOrderDetail.setImportOrder(importOrderSaved);
                 ImportOrderDetail importOrderDetailSaved = importOrderDetailService.saveOrUpdate(importOrderDetail);
-                LoHang loHang = new LoHang();
-                loHang.setQuantity(importOrderDetailSaved.getQuantity());
-                loHang.setProduct(importOrderDetail.getProduct());
-                loHangService.saveOrUpdate(loHang);
                 importOrderDetails.add(importOrderDetailSaved);
             }
             importOrderSaved.setImportOrderDetail(importOrderDetails);

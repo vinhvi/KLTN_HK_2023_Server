@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface SaleRepo extends JpaRepository<Sale,String> {
     Sale findSaleById(String id);
-    List<Sale> findByProducts(Product product);
+    List<Sale> findBySaleDetailsProduct(Product product);
 }

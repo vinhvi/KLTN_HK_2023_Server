@@ -2,13 +2,16 @@ package com.example.demo.serviceImpl;
 
 import com.example.demo.entity.Product;
 import com.example.demo.entity.Sale;
+import com.example.demo.entity.SaleDetail;
 import com.example.demo.repository.SaleRepo;
+import com.example.demo.service.SaleDetailService;
 import com.example.demo.service.SaleService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -18,13 +21,20 @@ import java.util.Random;
 @Slf4j
 public class SaleImpl implements SaleService {
     private final SaleRepo saleRepo;
-
+    private final SaleDetailService saleDetailService;
     @Override
     public Sale saveOrUpdate(Sale sale) {
         if (sale.getId() == null) {
             sale.setId(createId());
-            sale.setEnable(0);
-            return saleRepo.save(sale);
+            Sale saleSaved = saleRepo.save(sale);
+            List<SaleDetail> saleDetails = new ArrayList<>();
+            for (SaleDetail saleDetail : sale.getSaleDetails()) {
+                saleDetailService.saveOrUpdate(saleDetail);
+                saleDetail.setSales(saleSaved);
+                saleDetails.add(saleDetailService.saveOrUpdate(saleDetail));
+            }
+            saleSaved.setSaleDetails(saleDetails);
+            return saleRepo.save(saleSaved);
         }
         return saleRepo.save(sale);
     }
@@ -63,6 +73,6 @@ public class SaleImpl implements SaleService {
 
     @Override
     public List<Sale> getByProduct(Product product) {
-        return saleRepo.findByProducts(product);
+        return saleRepo.findBySaleDetailsProduct(product);
     }
 }
