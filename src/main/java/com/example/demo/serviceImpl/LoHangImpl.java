@@ -1,6 +1,5 @@
 package com.example.demo.serviceImpl;
 
-import com.example.demo.entity.ImportOrder;
 import com.example.demo.entity.LoHang;
 import com.example.demo.entity.Product;
 import com.example.demo.repository.LoHangRepo;
@@ -31,16 +30,18 @@ public class LoHangImpl implements LoHangService {
             loHang.setStatus(0);
             loHang.setId(randomIDLH());
             String productId = loHang.getProduct().getId();
-            if (productId == null){
+            if (productId == null) {
                 loHang.setProduct(productService.saveOrUpdate(loHang.getProduct()));
-            }else {
+            } else {
                 Product product = productService.getById(productId);
                 product.setQuantity(product.getQuantity() + loHang.getQuantity());
                 loHang.setProduct(productService.saveOrUpdate(product));
             }
             return loHangRepo.save(loHang);
         }
-        return loHang;
+        LoHang loHangUpdate = loHangRepo.findLoHangById(loHang.getId());
+        loHangUpdate.setStatus(1);
+        return loHangRepo.save(loHangUpdate);
     }
 
     @Override

@@ -12,13 +12,16 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SaleDetail {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int enable;
+
     @ManyToOne
     @JoinColumn(name = "products_id")
     private Product product;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "sales_id")
