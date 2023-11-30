@@ -8,7 +8,6 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "product_specifications")
-@Data
 @Getter
 @Setter
 @AllArgsConstructor
