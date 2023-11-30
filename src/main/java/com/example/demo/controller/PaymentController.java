@@ -1,14 +1,12 @@
 package com.example.demo.controller;
 
+import com.example.demo.DataBean.AfterPayment;
 import com.example.demo.DataBean.PaymentInfor;
 import com.example.demo.config.PaymentConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -22,15 +20,13 @@ public class PaymentController {
 
     @SneakyThrows
     @PostMapping("/paymentWithVNPAY")
-    public ResponseEntity<?> payment(@RequestBody PaymentInfor paymentInfor){
+    public ResponseEntity<?> payment(@RequestBody PaymentInfor paymentInfor) {
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
-        String orderType = "VNPAY";
-       long amount = 1000000;
-        // String bankCode = req.getParameter("bankCode");
-
+        String orderType = "other";
+        int amount = (int) paymentInfor.getPrice() * 100;
         String vnp_TxnRef = PaymentConfig.getRandomNumber(8);
-        // String vnp_IpAddr = PaymentConfig.getIpAddress(req);
+        String vnp_IpAddr = "127.0.0.1";
 
         String vnp_TmnCode = PaymentConfig.vnp_TmnCode;
 
@@ -41,20 +37,13 @@ public class PaymentController {
         vnp_Params.put("vnp_Amount", String.valueOf(amount));
         vnp_Params.put("vnp_CurrCode", "VND");
         vnp_Params.put("vnp_BankCode", "NCB");
-        vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
-        vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang:" + vnp_TxnRef);
+        vnp_Params.put("vnp_TxnRef", paymentInfor.getIdOrder());
+        vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang:" + paymentInfor.getIdOrder());
         vnp_Params.put("vnp_Locale", "vn");
-        //vnp_Params.put("vnp_OrderType", orderType);
+        vnp_Params.put("vnp_ReturnUrl", PaymentConfig.vnp_ReturnUrl);
+        vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
+        vnp_Params.put("vnp_OrderType", orderType);
 
-//        String locate = req.getParameter("language");
-//        if (locate != null && !locate.isEmpty()) {
-//            vnp_Params.put("vnp_Locale", locate);
-//        } else {
-//            vnp_Params.put("vnp_Locale", "vn");
-//        }
-        // vnp_Params.put("vnp_ReturnUrl", PaymentConfig.vnp_ReturnUrl);
-//        vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
-//
         Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
         String vnp_CreateDate = formatter.format(cld.getTime());
@@ -95,5 +84,26 @@ public class PaymentController {
         paymentInfor.setStatus("Ok");
 
         return ResponseEntity.ok().body(paymentInfor);
+    }
+
+    @GetMapping("/afterPayment")
+    public ResponseEntity<?> afterPayment(
+            @RequestParam(value = "vnp_Amount") String price,
+            @RequestParam(value = "vnp_BankCode") String bankCode,
+            @RequestParam(value = "vnp_PayDate") String date,
+            @RequestParam(value = "vnp_ResponseCode") String responseCode) {
+        AfterPayment afterPayment = new AfterPayment();
+        if (responseCode.equals("00")) {
+            afterPayment.setDate(date);
+            afterPayment.setStatus("Thành Công!!");
+            afterPayment.setBankCode(bankCode);
+            afterPayment.setPrice(price);
+        } else {
+            afterPayment.setDate(date);
+            afterPayment.setStatus("Thất Bại!!");
+            afterPayment.setBankCode(bankCode);
+            afterPayment.setPrice(price);
+        }
+        return ResponseEntity.ok().body(afterPayment);
     }
 }
