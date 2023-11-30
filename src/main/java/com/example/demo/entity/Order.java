@@ -21,6 +21,8 @@ public class Order implements Serializable {
     private Date date;
     private String statusOrder;
     private String note;
+    private String paymentType;
+    private int statusPayment;
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
