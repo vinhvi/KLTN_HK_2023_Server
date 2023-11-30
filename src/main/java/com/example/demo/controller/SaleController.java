@@ -87,4 +87,23 @@ public class SaleController {
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
     }
+
+    @PostMapping("/updateSale")
+    public ResponseEntity<?> updateSaleDetail(@RequestBody Sale sale) {
+        try {
+            List<SaleDetail> saleDetails = new ArrayList<>();
+            for (SaleDetail saleDetail1 : sale.getSaleDetails()) {
+                SaleDetail saleDetailU = saleDetailService.getById(saleDetail1.getId());
+                if (saleDetailU == null) {
+                    return ResponseEntity.badRequest().body("not found sale for " + saleDetail1.getId());
+                }
+                saleDetailU.setEnable(saleDetail1.getEnable());
+                saleDetails.add(saleDetailService.saveOrUpdate(saleDetailU));
+            }
+            sale.setSaleDetails(saleDetails);
+            return ResponseEntity.ok().body(service.saveOrUpdate(sale));
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
+        }
+    }
 }
