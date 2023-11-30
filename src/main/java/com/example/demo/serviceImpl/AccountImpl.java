@@ -53,6 +53,7 @@ public class AccountImpl implements AccountService {
 
     @Override
     public Account register(Account account) {
+
         String password = account.getPassWordA();
         if (password == null) {
             throw new IllegalArgumentException("Password cannot be null");

@@ -1,8 +1,9 @@
 package com.example.demo.controller;
 
-import com.example.demo.DataBean.AfterPayment;
 import com.example.demo.DataBean.PaymentInfor;
 import com.example.demo.config.PaymentConfig;
+import com.example.demo.entity.Order;
+import com.example.demo.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,7 @@ import java.util.*;
 @RequiredArgsConstructor
 @RequestMapping("api/v1/payments")
 public class PaymentController {
-
+    private final OrderService orderService;
     @SneakyThrows
     @PostMapping("/paymentWithVNPAY")
     public ResponseEntity<?> payment(@RequestBody PaymentInfor paymentInfor) {
@@ -86,24 +87,4 @@ public class PaymentController {
         return ResponseEntity.ok().body(paymentInfor);
     }
 
-    @GetMapping("/afterPayment")
-    public ResponseEntity<?> afterPayment(
-            @RequestParam(value = "vnp_Amount") String price,
-            @RequestParam(value = "vnp_BankCode") String bankCode,
-            @RequestParam(value = "vnp_PayDate") String date,
-            @RequestParam(value = "vnp_ResponseCode") String responseCode) {
-        AfterPayment afterPayment = new AfterPayment();
-        if (responseCode.equals("00")) {
-            afterPayment.setDate(date);
-            afterPayment.setStatus("Thành Công!!");
-            afterPayment.setBankCode(bankCode);
-            afterPayment.setPrice(price);
-        } else {
-            afterPayment.setDate(date);
-            afterPayment.setStatus("Thất Bại!!");
-            afterPayment.setBankCode(bankCode);
-            afterPayment.setPrice(price);
-        }
-        return ResponseEntity.ok().body(afterPayment);
-    }
 }

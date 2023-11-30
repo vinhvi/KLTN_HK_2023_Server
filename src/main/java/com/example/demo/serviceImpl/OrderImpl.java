@@ -11,10 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -74,6 +71,11 @@ public class OrderImpl implements OrderService {
     }
 
     @Override
+    public Order update(Order order) {
+        return orderRepo.save(order);
+    }
+
+    @Override
     public List<Order> listConfirm() {
         List<Order> orders = new ArrayList<>();
         for (Order order:orderRepo.findAll()) {
@@ -101,8 +103,15 @@ public class OrderImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getByDate(Date date) {
-        return orderRepo.findOrderByDate(date);
+    public List<Order> getByDate(int month, int year) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month - 1, 1, 0, 0, 0);
+        Date startOfMonth = calendar.getTime();
+        calendar.add(Calendar.MONTH, 1);
+        calendar.add(Calendar.SECOND, -1);
+        Date endOfMonth = calendar.getTime();
+        return orderRepo.findOrderByDateBetween(startOfMonth, endOfMonth);
+
     }
 
     @Override

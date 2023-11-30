@@ -1,10 +1,12 @@
 package com.example.demo.serviceImpl;
 
 import com.example.demo.DataBean.ShoppingCartDataBean;
+import com.example.demo.entity.Account;
 import com.example.demo.entity.Avatar;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.ShoppingCart;
 import com.example.demo.repository.CustomerRepo;
+import com.example.demo.service.AccountService;
 import com.example.demo.service.AvatarService;
 import com.example.demo.service.CustomerService;
 import com.example.demo.service.ShoppingCartService;
@@ -26,29 +28,40 @@ public class CustomerImpl implements CustomerService {
     private final CustomerRepo customerRepo;
     private final AvatarService avatarService;
     private final ShoppingCartService shoppingCartService;
+    private final AccountService accountService;
 
     @Override
     public Customer addCustomer(Customer customer) {
-
-        //set image default in database for customer if image null
-        if (customer.getAvatar() == null) {
+        if (customer.getId() == null){
+            Account account = accountService.getByEmail2(customer.getEmail());
+            customer.setAccount(account);
+            //set image default in database for customer if image null
             Avatar avatar = new Avatar();
             avatar.setIdCloud("default");
             avatar.setImageLink("https://res.cloudinary.com/dv329zg5e/image/upload/v1692689754/user_default_txm2pe.png");
             customer.setAvatar(avatarService.addAvatar(avatar));
-        }
-        Customer customerSave = customerRepo.save(customer);
-        ShoppingCartDataBean shoppingCartDataBean = shoppingCartService.getByCustomer(customer);
-        if (shoppingCartDataBean == null) {
+            customer.setId(randomId());
+            customer.setCustomerType("Thành Viên");
+            Customer customerSave = customerRepo.save(customer);
+            //create shoppingCart
             ShoppingCart shoppingCart = new ShoppingCart();
             Calendar calendar = Calendar.getInstance();
             Date date = calendar.getTime();
             shoppingCart.setDate(date);
             shoppingCart.setCustomer(customerSave);
             shoppingCartService.saveOrUpdate(shoppingCart);
+            return customerSave;
         }
+        return customerRepo.save(customer);
+    }
 
-        return customerSave;
+    @Override
+    public Customer createCustomerVL(Customer customer) {
+        if (customer.getId() == null){
+            customer.setId(randomId());
+            customer.setCustomerType("Vãng Lai");
+        }
+        return customerRepo.save(customer);
     }
 
     @Override

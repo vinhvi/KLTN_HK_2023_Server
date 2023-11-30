@@ -23,7 +23,14 @@ public class CustomerController {
             return ResponseEntity.badRequest().body("There is an exception when execute!! --> " + exception);
         }
     }
-
+    @PostMapping("/createKHVL")
+    public ResponseEntity<?> createKHVL(@RequestBody Customer customer) {
+        try {
+            return ResponseEntity.ok().body(customerService.createCustomerVL(customer));
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute!! --> " + exception);
+        }
+    }
     @GetMapping("/randomId")
     public ResponseEntity<String> randomIdCustomer() {
         try {

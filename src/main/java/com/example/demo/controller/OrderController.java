@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -88,10 +87,19 @@ public class OrderController {
         }
     }
 
-    @GetMapping("/getByDate")
-    public ResponseEntity<?> getOrderByDate(@RequestBody Date date) {
+    @GetMapping("/getByDate/{date}")
+    public ResponseEntity<?> getOrderByDate(@PathVariable("date") String date) {
         try {
-            List<Order> orderList = orderService.getByDate(date);
+            int month = 0;
+            int year = 0;
+            String[] parts = date.split("-");
+            if (parts.length == 2) {
+                month = Integer.parseInt(parts[0]);
+                year = Integer.parseInt(parts[1]);
+            } else {
+                return ResponseEntity.badRequest().body("Invalid input format !!");
+            }
+            List<Order> orderList = orderService.getByDate(month, year);
             if (orderList.isEmpty()) {
                 return ResponseEntity.badRequest().body("not found!!");
             }
