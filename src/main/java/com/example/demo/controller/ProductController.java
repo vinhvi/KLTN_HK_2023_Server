@@ -48,6 +48,7 @@ public class ProductController {
                     saleDatabean.setStart(sale.getStart());
                     saleDatabean.setEnd(sale.getEnd());
                     saleDatabean.setDescription(sale.getDescription());
+                    saleDatabean.setDiscount(saleDatabean.getDiscount());
                     productDatabean.setSale(saleDatabean);
                     productDatabean.setImageProducts(product.getImageProducts());
                     productDatabean.setDescription(product.getDescription());
@@ -98,6 +99,7 @@ public class ProductController {
                     saleDatabean.setStart(sale.getStart());
                     saleDatabean.setEnd(sale.getEnd());
                     saleDatabean.setDescription(sale.getDescription());
+                    saleDatabean.setDiscount(saleDatabean.getDiscount());
                     productDatabean.setSale(saleDatabean);
                 }
                 productDatabean.setSpecifications(product.getSpecifications());
@@ -173,6 +175,7 @@ public class ProductController {
             saleDatabean.setStart(sale.getStart());
             saleDatabean.setEnd(sale.getEnd());
             saleDatabean.setDescription(sale.getDescription());
+            saleDatabean.setDiscount(saleDatabean.getDiscount());
             productDatabean.setSale(saleDatabean);
         }
         productDatabean.setSpecifications(product.getSpecifications());
