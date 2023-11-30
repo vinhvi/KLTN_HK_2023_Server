@@ -3,7 +3,9 @@ package com.example.demo.controller;
 import com.example.demo.DataBean.PaymentInfor;
 import com.example.demo.config.PaymentConfig;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,15 +20,17 @@ import java.util.*;
 @RequestMapping("api/v1/payments")
 public class PaymentController {
 
+    @SneakyThrows
+    @PostMapping("/paymentWithVNPAY")
     public ResponseEntity<?> payment(@RequestBody PaymentInfor paymentInfor){
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String orderType = "VNPAY";
-        //long amount = Integer.parseInt(req.getParameter("amount"))*100;
-       // String bankCode = req.getParameter("bankCode");
+       long amount = 1000000;
+        // String bankCode = req.getParameter("bankCode");
 
         String vnp_TxnRef = PaymentConfig.getRandomNumber(8);
-       // String vnp_IpAddr = PaymentConfig.getIpAddress(req);
+        // String vnp_IpAddr = PaymentConfig.getIpAddress(req);
 
         String vnp_TmnCode = PaymentConfig.vnp_TmnCode;
 
@@ -34,12 +38,12 @@ public class PaymentController {
         vnp_Params.put("vnp_Version", vnp_Version);
         vnp_Params.put("vnp_Command", vnp_Command);
         vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
-        vnp_Params.put("vnp_Amount", String.valueOf(paymentInfor.getPrice() * 100));
+        vnp_Params.put("vnp_Amount", String.valueOf(amount));
         vnp_Params.put("vnp_CurrCode", "VND");
         vnp_Params.put("vnp_BankCode", "NCB");
         vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
         vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang:" + vnp_TxnRef);
-        vnp_Params.put("vnp_OrderType", orderType);
+        //vnp_Params.put("vnp_OrderType", orderType);
 
 //        String locate = req.getParameter("language");
 //        if (locate != null && !locate.isEmpty()) {
@@ -47,7 +51,7 @@ public class PaymentController {
 //        } else {
 //            vnp_Params.put("vnp_Locale", "vn");
 //        }
-       // vnp_Params.put("vnp_ReturnUrl", PaymentConfig.vnp_ReturnUrl);
+        // vnp_Params.put("vnp_ReturnUrl", PaymentConfig.vnp_ReturnUrl);
 //        vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
 //
         Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
@@ -71,18 +75,24 @@ public class PaymentController {
                 //Build hash data
                 hashData.append(fieldName);
                 hashData.append('=');
-              //  hashData.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
+                hashData.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
                 //Build query
-             //   query.append(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII.toString()));
+                query.append(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII.toString()));
                 query.append('=');
-             //   query.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
+              query.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
                 if (itr.hasNext()) {
                     query.append('&');
                     hashData.append('&');
                 }
             }
         }
+        String queryUrl = query.toString();
+        String vnp_SecureHash = PaymentConfig.hmacSHA512(PaymentConfig.secretKey, hashData.toString());
+        queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
+        String paymentUrl = PaymentConfig.vnp_PayUrl + "?" + queryUrl;
+        paymentInfor.setUrl(paymentUrl);
+        paymentInfor.setStatus("Ok");
 
-        return ResponseEntity.ok().body("");
+        return ResponseEntity.ok().body(paymentInfor);
     }
 }

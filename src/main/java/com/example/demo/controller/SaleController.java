@@ -93,12 +93,16 @@ public class SaleController {
         try {
             List<SaleDetail> saleDetails = new ArrayList<>();
             for (SaleDetail saleDetail1 : sale.getSaleDetails()) {
-                SaleDetail saleDetailU = saleDetailService.getById(saleDetail1.getId());
-                if (saleDetailU == null) {
-                    return ResponseEntity.badRequest().body("not found sale for " + saleDetail1.getId());
+                if (saleDetail1.getId() != 0){
+                    SaleDetail saleDetailU = saleDetailService.getById(saleDetail1.getId());
+                    if (saleDetailU == null) {
+                        return ResponseEntity.badRequest().body("not found sale for " + saleDetail1.getId());
+                    }
+                    saleDetailU.setEnable(saleDetail1.getEnable());
+                    saleDetails.add(saleDetailService.saveOrUpdate(saleDetailU));
+                }else {
+                    saleDetails.add(saleDetailService.saveOrUpdate(saleDetail1));
                 }
-                saleDetailU.setEnable(saleDetail1.getEnable());
-                saleDetails.add(saleDetailService.saveOrUpdate(saleDetailU));
             }
             sale.setSaleDetails(saleDetails);
             return ResponseEntity.ok().body(service.saveOrUpdate(sale));

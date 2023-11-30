@@ -11,5 +11,6 @@ public class PaymentInfor {
 
     private String idOrder;
     private double price;
-
+    private String status;
+    private String url;
 }
