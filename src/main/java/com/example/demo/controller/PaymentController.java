@@ -43,6 +43,7 @@ public class PaymentController {
         vnp_Params.put("vnp_BankCode", "NCB");
         vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
         vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang:" + vnp_TxnRef);
+        vnp_Params.put("vnp_Locale", "vn");
         //vnp_Params.put("vnp_OrderType", orderType);
 
 //        String locate = req.getParameter("language");

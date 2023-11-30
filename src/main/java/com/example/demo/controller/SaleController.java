@@ -101,6 +101,7 @@ public class SaleController {
                     saleDetailU.setEnable(saleDetail1.getEnable());
                     saleDetails.add(saleDetailService.saveOrUpdate(saleDetailU));
                 }else {
+                    saleDetail1.setSales(sale);
                     saleDetails.add(saleDetailService.saveOrUpdate(saleDetail1));
                 }
             }
