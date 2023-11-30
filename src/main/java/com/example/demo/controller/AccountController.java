@@ -17,11 +17,11 @@ public class AccountController {
     @PostMapping("/update")
     public ResponseEntity<?> update(@RequestBody Account account) {
         try {
-            Account accountUpdate = accountService.getById(account.getId());
+            Account accountUpdate = accountService.getByEmail2(account.getEmail());
             if (accountUpdate == null) {
                 return ResponseEntity.badRequest().body(account.getId() + " not found!");
             }
-            accountUpdate.setEnable(false);
+            accountUpdate.setEnable(account.isEnable());
             return ResponseEntity.ok().body(accountService.saveOrUpdate(accountUpdate));
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
