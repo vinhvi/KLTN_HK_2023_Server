@@ -2,20 +2,15 @@ package com.example.demo.serviceImpl;
 
 import com.example.demo.entity.ImportOrder;
 import com.example.demo.entity.ImportOrderDetail;
-import com.example.demo.entity.LoHang;
 import com.example.demo.repository.ImportOrderRepo;
 import com.example.demo.service.ImportOrderDetailService;
 import com.example.demo.service.ImportOrderService;
-import com.example.demo.service.LoHangService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -75,5 +70,16 @@ public class ImportOrderImpl implements ImportOrderService {
             }
         }
         return newId;
+    }
+
+    @Override
+    public List<ImportOrder> getByMonth(int month, int year) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month - 1, 1, 0, 0, 0);
+        Date startOfMonth = calendar.getTime();
+        calendar.add(Calendar.MONTH, 1);
+        calendar.add(Calendar.SECOND, -1);
+        Date endOfMonth = calendar.getTime();
+        return importOrderRepo.findImportOrderByDateBetween(startOfMonth, endOfMonth);
     }
 }

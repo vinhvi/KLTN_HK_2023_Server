@@ -13,4 +13,5 @@ public interface OrderDetailService {
     OrderDetail getById(int id);
 
     void deleteOrderDetail(OrderDetail orderDetail);
+
 }

@@ -2,7 +2,6 @@ package com.example.demo.serviceImpl;
 
 import com.example.demo.entity.*;
 import com.example.demo.repository.OrderRepo;
-import com.example.demo.service.EmployeeService;
 import com.example.demo.service.OrderDetailService;
 import com.example.demo.service.OrderService;
 import com.example.demo.service.ProductService;
@@ -103,7 +102,7 @@ public class OrderImpl implements OrderService {
     }
 
     @Override
-    public List<Order> getByDate(int month, int year) {
+    public List<Order> getByDateBetween(int month, int year) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, month - 1, 1, 0, 0, 0);
         Date startOfMonth = calendar.getTime();
@@ -165,6 +164,11 @@ public class OrderImpl implements OrderService {
             orderList.add(save);
         }
         return orderList;
+    }
+
+    @Override
+    public List<Order> getByDate(Date date) {
+        return orderRepo.findOrderByDate(date);
     }
 
 }

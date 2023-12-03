@@ -9,4 +9,5 @@ public interface ImportOrderService {
     List<ImportOrder> getAll();
     ImportOrder getById(String id);
     String randomId();
+    List<ImportOrder> getByMonth(int month, int year);
 }

@@ -16,8 +16,10 @@ public interface OrderService {
     List<Order> getOrderByCustomer(Customer customer);
     Order getOrderById(String id);
     List<Order> getAll();
-    List<Order> getByDate(int month, int year);
+    List<Order> getByDateBetween(int month, int year);
     String randomOrderId();
     Order createNow(Order order);
     List<Order> update(Employee employee, List<Order> orders);
+
+    List<Order> getByDate(Date date);
 }

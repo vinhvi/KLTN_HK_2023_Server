@@ -2,7 +2,6 @@ package com.example.demo.DataBean;
 
 import lombok.*;
 
-@Data
 @Getter
 @Setter
 @AllArgsConstructor

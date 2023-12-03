@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -99,7 +101,7 @@ public class OrderController {
             } else {
                 return ResponseEntity.badRequest().body("Invalid input format !!");
             }
-            List<Order> orderList = orderService.getByDate(month, year);
+            List<Order> orderList = orderService.getByDateBetween(month, year);
             if (orderList.isEmpty()) {
                 return ResponseEntity.badRequest().body("not found!!");
             }
@@ -108,6 +110,7 @@ public class OrderController {
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
     }
+
 
     @GetMapping("/getByCustomer/{key}")
     public ResponseEntity<?> getOrderByCustomer(@PathVariable("key") String key) {
