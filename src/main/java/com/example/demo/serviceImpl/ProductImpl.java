@@ -102,15 +102,19 @@ public class ProductImpl implements ProductService {
     @Override
     public List<Product> listNeedUpdate() {
         List<Product> productListNeedUpdate = new ArrayList<>();
-        for (Product product:productRepo.findAll()) {
-            if (product.getImageProducts() == null || product.getProductName() == null||product.getBrand()==null||product.getDescription()==null
-                    ||product.getPrice()==0||product.getSpecifications()==null){
+        for (Product product : productRepo.findAll()) {
+            if (product.getImageProducts() == null || product.getProductName() == null || product.getBrand() == null || product.getDescription() == null
+                    || product.getPrice() == 0 || product.getSpecifications() == null) {
                 productListNeedUpdate.add(product);
             }
         }
         return productListNeedUpdate;
     }
 
+    @Override
+    public void delete(Product product) {
+        productRepo.delete(product);
+    }
 
 
 }

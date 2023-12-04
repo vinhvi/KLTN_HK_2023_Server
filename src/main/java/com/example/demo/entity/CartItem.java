@@ -8,7 +8,6 @@ import java.util.Date;
 
 @Entity
 @Table(name = "shopping_cart_details")
-@Data
 @Getter
 @Setter
 @AllArgsConstructor

@@ -38,4 +38,9 @@ public class ImportOrderDetailImpl implements ImportOrderDetailService {
     public void deleteById(ImportOrderDetail importOrderDetail) {
         repo.delete(importOrderDetail);
     }
+
+    @Override
+    public ImportOrderDetail getByLH(LoHang loHang) {
+        return repo.findImportOrderDetailByLoHang(loHang);
+    }
 }

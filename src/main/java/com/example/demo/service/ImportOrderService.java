@@ -10,4 +10,5 @@ public interface ImportOrderService {
     ImportOrder getById(String id);
     String randomId();
     List<ImportOrder> getByMonth(int month, int year);
+    void delete(ImportOrder importOrder);
 }

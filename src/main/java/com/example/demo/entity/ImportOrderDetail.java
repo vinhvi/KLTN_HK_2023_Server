@@ -8,7 +8,6 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "import_order_details")
-@Data
 @Getter
 @Setter
 @AllArgsConstructor

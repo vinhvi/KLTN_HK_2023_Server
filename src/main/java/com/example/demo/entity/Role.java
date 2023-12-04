@@ -7,7 +7,6 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "roles")
-@Data
 @Getter
 @Setter
 @AllArgsConstructor

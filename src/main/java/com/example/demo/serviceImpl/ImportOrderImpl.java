@@ -82,4 +82,9 @@ public class ImportOrderImpl implements ImportOrderService {
         Date endOfMonth = calendar.getTime();
         return importOrderRepo.findImportOrderByDateBetween(startOfMonth, endOfMonth);
     }
+
+    @Override
+    public void delete(ImportOrder importOrder) {
+        importOrderRepo.delete(importOrder);
+    }
 }

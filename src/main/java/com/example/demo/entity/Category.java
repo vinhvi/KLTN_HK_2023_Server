@@ -7,7 +7,6 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "categories")
-@Data
 @Getter
 @Setter
 @AllArgsConstructor

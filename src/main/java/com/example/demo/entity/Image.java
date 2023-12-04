@@ -10,7 +10,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 @MappedSuperclass
-@Data
 @Getter
 @Setter
 public abstract class Image implements Serializable {

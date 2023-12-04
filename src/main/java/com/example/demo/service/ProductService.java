@@ -14,4 +14,5 @@ public interface ProductService {
     Product saveOrUpdate(Product product);
     String randomId();
     List<Product> listNeedUpdate();
+    void delete(Product product);
 }

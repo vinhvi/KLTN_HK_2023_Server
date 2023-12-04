@@ -2,12 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.DataBean.ProductDatabean;
 import com.example.demo.DataBean.SaleDatabean;
-import com.example.demo.entity.Product;
-import com.example.demo.entity.Sale;
-import com.example.demo.entity.SaleDetail;
-import com.example.demo.service.ProductService;
-import com.example.demo.service.SaleDetailService;
-import com.example.demo.service.SaleService;
+import com.example.demo.entity.*;
+import com.example.demo.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +18,10 @@ public class ProductController {
     private final ProductService productService;
     private final SaleService saleService;
     private final SaleDetailService saleDetailService;
+    private final ImportOrderDetailService importOrderDetailService;
+    private final ImportOrderService importOrderService;
+    private final LoHangService loHangService;
+    private final ProductSpecificationService productSpecificationService;
 
     @GetMapping("/randomId")
     public ResponseEntity<?> randomId() {
@@ -191,5 +191,31 @@ public class ProductController {
         productDatabean.setCategory(product.getCategory());
 
         return productDatabean;
+    }
+
+    @DeleteMapping("/delete_product/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") String id) {
+        try {
+            Product product = productService.getById(id);
+            List<LoHang> loHangs = loHangService.getByProduct(product);
+            for (LoHang loHang : loHangs) {
+                ImportOrderDetail importOrderDetail = importOrderDetailService.getByLH(loHang);
+                ImportOrder importOrder = importOrderService.getById(importOrderDetail.getImportOrder().getId());
+                System.out.println(importOrder);
+                for (ImportOrderDetail importOrderDetailDelete : importOrder.getImportOrderDetail()) {
+                    importOrderDetailService.deleteById(importOrderDetailDelete);
+                    loHangService.delete(importOrderDetailDelete.getLoHang());
+                }
+                importOrderService.delete(importOrder);
+
+            }
+            for (ProductSpecification productSpecification : product.getSpecifications()) {
+                productSpecificationService.delete(productSpecification);
+            }
+            productService.delete(product);
+            return ResponseEntity.ok().body("Success!!");
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
+        }
     }
 }

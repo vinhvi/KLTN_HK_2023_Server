@@ -25,6 +25,8 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/**")
                 .permitAll()
+//                .requestMatchers("/api/manage/admin/**")
+//                .hasRole("ADMIN")
                 .requestMatchers(AUTH_WHITELIST)
                 .permitAll()
                 .anyRequest()

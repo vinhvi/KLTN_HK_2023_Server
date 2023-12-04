@@ -80,4 +80,9 @@ public class LoHangImpl implements LoHangService {
         }
         return newId;
     }
+
+    @Override
+    public void delete(LoHang loHang) {
+        loHangRepo.delete(loHang);
+    }
 }

@@ -7,7 +7,6 @@ import java.util.Date;
 
 @Entity
 @Table(name = "lo_hangs")
-@Data
 @Getter
 @Setter
 @AllArgsConstructor

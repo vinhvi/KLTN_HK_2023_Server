@@ -7,7 +7,6 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "suppliers")
-@Data
 @Getter
 @Setter
 @AllArgsConstructor

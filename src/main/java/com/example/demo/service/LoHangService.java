@@ -1,7 +1,5 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.ImportOrder;
-import com.example.demo.entity.ImportOrderDetail;
 import com.example.demo.entity.LoHang;
 import com.example.demo.entity.Product;
 
@@ -17,4 +15,6 @@ public interface LoHangService {
     List<LoHang> getByProduct(Product product);
 
     String randomIDLH();
+
+    void delete(LoHang loHang);
 }
