@@ -221,14 +221,8 @@ public class ProductController {
             List<LoHang> loHangs = loHangService.getByProduct(product);
             for (LoHang loHang : loHangs) {
                 ImportOrderDetail importOrderDetail = importOrderDetailService.getByLH(loHang);
-                ImportOrder importOrder = importOrderService.getById(importOrderDetail.getImportOrder().getId());
-                System.out.println(importOrder);
-                for (ImportOrderDetail importOrderDetailDelete : importOrder.getImportOrderDetail()) {
-                    importOrderDetailService.deleteById(importOrderDetailDelete);
-                    loHangService.delete(importOrderDetailDelete.getLoHang());
-                }
-                importOrderService.delete(importOrder);
-
+                importOrderDetailService.deleteById(importOrderDetail);
+                loHangService.delete(importOrderDetail.getLoHang());
             }
             for (ProductSpecification productSpecification : product.getSpecifications()) {
                 productSpecificationService.delete(productSpecification);
