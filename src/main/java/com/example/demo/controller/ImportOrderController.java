@@ -47,6 +47,13 @@ public class ImportOrderController {
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
     }
-
+    @GetMapping("/randomId")
+    public ResponseEntity<?> randomId() {
+        try {
+            return ResponseEntity.ok().body(importOrderService.randomId());
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
+        }
+    }
 
 }

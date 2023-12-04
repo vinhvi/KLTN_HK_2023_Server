@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.ImportOrder;
 import com.example.demo.entity.LoHang;
 import com.example.demo.entity.Product;
 import com.example.demo.service.ImportOrderService;
@@ -42,6 +41,14 @@ public class LoHangController {
         }
     }
 
+    @GetMapping("/randomId")
+    public ResponseEntity<?> randomId() {
+        try {
+            return ResponseEntity.ok().body(loHangService.randomIDLH());
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
+        }
+    }
 
     @GetMapping("/getByProduct/{id}")
     public ResponseEntity<?> getLoHangByProduct(@PathVariable("id") String id) {

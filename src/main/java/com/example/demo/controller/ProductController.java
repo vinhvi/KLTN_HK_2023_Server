@@ -41,6 +41,13 @@ public class ProductController {
                 ProductDatabean productDatabean = new ProductDatabean();
                 SaleDetail saleDetail = saleDetailService.getByProductAndStatus(1, product);
                 SaleDatabean saleDatabean = new SaleDatabean();
+                List<LoHang> loHangs = loHangService.getByProduct(product);
+                for (LoHang loHang : loHangs) {
+                    if (loHang.getStatus() == 1) {
+                        productDatabean.setLoHang(loHang);
+                        break;
+                    }
+                }
                 if (saleDetail != null) {
                     Sale sale = saleService.getById(saleDetail.getSales().getId());
                     saleDatabean.setId(sale.getId());
@@ -93,6 +100,13 @@ public class ProductController {
                 ProductDatabean productDatabean = new ProductDatabean();
                 SaleDetail saleDetail = saleDetailService.getByProductAndStatus(1, product);
                 SaleDatabean saleDatabean = new SaleDatabean();
+                List<LoHang> loHangs = loHangService.getByProduct(product);
+                for (LoHang loHang : loHangs) {
+                    if (loHang.getStatus() == 1) {
+                        productDatabean.setLoHang(loHang);
+                        break;
+                    }
+                }
                 if (saleDetail != null) {
                     Sale sale = saleService.getById(saleDetail.getSales().getId());
                     saleDatabean.setId(sale.getId());
@@ -170,6 +184,13 @@ public class ProductController {
         ProductDatabean productDatabean = new ProductDatabean();
         SaleDetail saleDetail = saleDetailService.getByProductAndStatus(1, product);
         SaleDatabean saleDatabean = new SaleDatabean();
+        List<LoHang> loHangs = loHangService.getByProduct(product);
+        for (LoHang loHang : loHangs) {
+            if (loHang.getStatus() == 1) {
+                productDatabean.setLoHang(loHang);
+                break;
+            }
+        }
         if (saleDetail != null) {
             Sale sale = saleService.getById(saleDetail.getSales().getId());
             saleDatabean.setId(sale.getId());

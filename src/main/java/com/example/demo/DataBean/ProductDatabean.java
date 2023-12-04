@@ -33,4 +33,6 @@ public class ProductDatabean {
     private List<ImageProduct> imageProducts;
 
     private SaleDatabean sale;
+
+    private LoHang loHang;
 }
