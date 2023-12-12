@@ -27,20 +27,6 @@ public class SendMailController {
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
     }
-
-    @PostMapping("/changePassword/{email}")
-    public ResponseEntity<?> sendForgotPass(@PathVariable("email") String email) {
-        try {
-            SimpleMailMessage mailMessage = new SimpleMailMessage();
-            mailMessage.setTo(email);
-            mailMessage.setSubject("MiVin-Shop đặt lại mật khẩu");
-            mailMessage.setText("http://localhost:8521/api/v1/resetPassword/" + email);
-            javaMailSender.send(mailMessage);
-            return ResponseEntity.ok().body("Đã gửi email thành công!");
-        } catch (Exception exception) {
-            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
-        }
-    }
     @GetMapping("/resetPassword/{email}")
     public ResponseEntity<?> forgotPassword(@PathVariable("email") String email) {
         try {
@@ -51,11 +37,11 @@ public class SendMailController {
             if (newPassword.equals("")){
                 mailMessage.setText("email không tồn tại!!");
                 javaMailSender.send(mailMessage);
-                return ResponseEntity.badRequest().body("thất bại!!");
+                return ResponseEntity.badRequest().body("thất bại");
             }
             mailMessage.setText(newPassword);
             javaMailSender.send(mailMessage);
-            return ResponseEntity.ok().body("Đã gửi email thành công!");
+            return ResponseEntity.ok().body("Thành công");
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
