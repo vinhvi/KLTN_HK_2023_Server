@@ -2,9 +2,7 @@ package com.example.demo.serviceImpl;
 
 import com.example.demo.entity.*;
 import com.example.demo.repository.OrderRepo;
-import com.example.demo.service.OrderDetailService;
-import com.example.demo.service.OrderService;
-import com.example.demo.service.ProductService;
+import com.example.demo.service.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +18,8 @@ public class OrderImpl implements OrderService {
     private final OrderRepo orderRepo;
     private final OrderDetailService orderDetailService;
     private final ProductService productService;
-
+    private final CustomerService customerService;
+    private final SaleDetailService saleDetailService;
     @Override
     public Order saveOrUpdate(int idCart,Order order) {
         if (order.getId() != null) {
@@ -45,6 +44,7 @@ public class OrderImpl implements OrderService {
             }
             return orderRepo.save(orderUpdate);
         }
+        double tt = 0;
         order.setId(randomOrderId());
         Date currentDate = new Date();
         order.setDate(currentDate);
@@ -54,6 +54,11 @@ public class OrderImpl implements OrderService {
         for (OrderDetail orderDetail : order.getOrderDetails()) {
             orderDetail.setOrder(orderSaved);
             orderDetail.setDate(currentDate);
+            Product product = productService.getById(orderDetail.getProduct().getId());
+            SaleDetail saleDetail = saleDetailService.getByProductAndStatus(1, product);
+            if (saleDetail != null) {
+                tt = tt + product.getPrice() - (product.getPrice()*(saleDetail.getSales().getDiscount()/100));
+            }else
             orderDetails.add(orderDetailService.saveOrUpdate(idCart,orderDetail));
         }
         orderSaved.setOrderDetails(orderDetails);
@@ -66,6 +71,7 @@ public class OrderImpl implements OrderService {
             product.setQuantity(slUpdate);
             productService.saveOrUpdate(product);
         }
+
         return orderSaved;
     }
 
@@ -165,7 +171,6 @@ public class OrderImpl implements OrderService {
         }
         return orderList;
     }
-
     @Override
     public List<Order> getByDate(Date date) {
         return orderRepo.findOrderByDate(date);

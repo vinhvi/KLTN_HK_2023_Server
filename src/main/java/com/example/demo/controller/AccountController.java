@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.DataBean.AccountChange;
 import com.example.demo.entity.Account;
 import com.example.demo.service.AccountService;
 import lombok.RequiredArgsConstructor;
@@ -53,4 +54,16 @@ public class AccountController {
         }
     }
 
+    @PostMapping("/changePasswrod")
+    public ResponseEntity<?> changePassword(@RequestBody AccountChange accountChange) {
+        try {
+            int check = accountService.changePassword(accountChange);
+            if (check == 0) {
+                return ResponseEntity.badRequest().body("Thất bại!!");
+            }
+            return ResponseEntity.ok().body("Thành công!!");
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
+        }
+    }
 }
