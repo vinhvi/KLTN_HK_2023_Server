@@ -2,7 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.DataBean.AccountChange;
 import com.example.demo.entity.Account;
+import com.example.demo.entity.Role;
 import com.example.demo.service.AccountService;
+import com.example.demo.service.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,7 @@ import java.util.List;
 @RequestMapping("api/v1/accounts")
 public class AccountController {
     private final AccountService accountService;
+    private final RoleService roleService;
 
     @PostMapping("/update")
     public ResponseEntity<?> update(@RequestBody Account account) {
@@ -62,6 +65,40 @@ public class AccountController {
                 return ResponseEntity.badRequest().body("Thất bại!!");
             }
             return ResponseEntity.ok().body("Thành công!!");
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
+        }
+    }
+
+    @PostMapping("/addRoleToAccount/{idRole}")
+    public ResponseEntity<?> addRole(@RequestBody Account account, @PathVariable("idRole") int idRole) {
+        try {
+            Account accountAddRole = accountService.getById(account.getId());
+            if (accountAddRole == null) {
+                return ResponseEntity.badRequest().body(account.getId() + " not found!!");
+            }
+            Role role = roleService.getById(idRole);
+            if (role == null) {
+                return ResponseEntity.badRequest().body(account.getId() + " not found!!");
+            }
+            return ResponseEntity.ok().body(accountService.addRoleToAccount(account, role));
+        } catch (Exception exception) {
+            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
+        }
+    }
+
+    @PostMapping("/removeRoleToAccount/{idRole}")
+    public ResponseEntity<?> removeRole(@RequestBody Account account, @PathVariable("idRole") int idRole) {
+        try {
+            Account accountAddRole = accountService.getById(account.getId());
+            if (accountAddRole == null) {
+                return ResponseEntity.badRequest().body(account.getId() + " not found!!");
+            }
+            Role role = roleService.getById(idRole);
+            if (role == null) {
+                return ResponseEntity.badRequest().body(account.getId() + " not found!!");
+            }
+            return ResponseEntity.ok().body(accountService.removeRoleFromAccount(account, role));
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }

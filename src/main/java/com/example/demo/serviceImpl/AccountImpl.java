@@ -7,6 +7,7 @@ import com.example.demo.config.JwtService;
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Customer;
 import com.example.demo.entity.Employee;
+import com.example.demo.entity.Role;
 import com.example.demo.repository.AccountRepo;
 import com.example.demo.service.AccountService;
 import com.example.demo.service.ShoppingCartService;
@@ -177,5 +178,17 @@ public class AccountImpl implements AccountService {
         employeeDataBean.setFirstName(employee.getFirstName());
         employeeDataBean.setLastName(employee.getLastName());
         return employeeDataBean;
+    }
+
+    @Override
+    public Account removeRoleFromAccount(Account account, Role role) {
+        account.getRoles().remove(role);
+        return accountRepo.save(account);
+    }
+
+    @Override
+    public Account addRoleToAccount(Account account, Role role) {
+        account.getRoles().add(role);
+        return accountRepo.save(account);
     }
 }
