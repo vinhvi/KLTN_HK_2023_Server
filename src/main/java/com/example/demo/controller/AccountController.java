@@ -9,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequiredArgsConstructor
@@ -70,43 +72,26 @@ public class AccountController {
         }
     }
 
-    @PostMapping("/addRoleToAccount/{idA}")
+    @PostMapping("/addOrRemoveRoleToAccount/{idA}")
     public ResponseEntity<?> addRole(@RequestBody List<Role> roles, @PathVariable("idA") int idA) {
         try {
             Account accountAddRole = accountService.getById(idA);
             if (accountAddRole == null) {
                 return ResponseEntity.badRequest().body(idA + " not found!!");
             }
+            Set<Role> roleSet = new HashSet<>();
             for (Role role:roles) {
                 Role roleC = roleService.getById(role.getId());
                 if (roleC == null){
                     return ResponseEntity.badRequest().body("not found  for role id: " + role.getId());
                 }
-                accountService.addRoleToAccount(accountAddRole, role);
+                roleSet.add(role);
             }
-            return ResponseEntity.ok().body(accountService.getById(idA));
+            accountAddRole.setRoles(roleSet);
+            return ResponseEntity.ok().body(accountService.saveOrUpdate(accountAddRole));
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
     }
 
-    @PostMapping("/removeRoleToAccount/{idA}")
-    public ResponseEntity<?> removeRole(@RequestBody List<Role> roles, @PathVariable("idA") int idA) {
-        try {
-            Account accountAddRole = accountService.getById(idA);
-            if (accountAddRole == null) {
-                return ResponseEntity.badRequest().body(idA + " not found!!");
-            }
-            for (Role role:roles) {
-                Role roleC = roleService.getById(role.getId());
-                if (roleC == null){
-                    return ResponseEntity.badRequest().body("not found  for role id: " + role.getId());
-                }
-                accountService.removeRoleFromAccount(accountAddRole, role);
-            }
-            return ResponseEntity.ok().body(accountService.getById(idA));
-        } catch (Exception exception) {
-            return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
-        }
-    }
 }
