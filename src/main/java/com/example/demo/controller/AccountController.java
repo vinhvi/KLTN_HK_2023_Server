@@ -81,7 +81,7 @@ public class AccountController {
             if (role == null) {
                 return ResponseEntity.badRequest().body(account.getId() + " not found!!");
             }
-            return ResponseEntity.ok().body(accountService.addRoleToAccount(account, role));
+            return ResponseEntity.ok().body(accountService.addRoleToAccount(accountAddRole, role));
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
@@ -98,7 +98,7 @@ public class AccountController {
             if (role == null) {
                 return ResponseEntity.badRequest().body(account.getId() + " not found!!");
             }
-            return ResponseEntity.ok().body(accountService.removeRoleFromAccount(account, role));
+            return ResponseEntity.ok().body(accountService.removeRoleFromAccount(accountAddRole, role));
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
