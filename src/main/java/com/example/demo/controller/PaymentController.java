@@ -25,7 +25,7 @@ public class PaymentController {
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
         String orderType = "other";
-        int amount = (int) paymentInfor.getPrice() * 100;
+        int amount = (int) paymentInfor.getPrice()*100;
         String vnp_TxnRef = PaymentConfig.getRandomNumber(8);
         String vnp_IpAddr = "127.0.0.1";
 
