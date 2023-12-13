@@ -70,35 +70,41 @@ public class AccountController {
         }
     }
 
-    @PostMapping("/addRoleToAccount/{idRole}")
-    public ResponseEntity<?> addRole(@RequestBody Account account, @PathVariable("idRole") int idRole) {
+    @PostMapping("/addRoleToAccount/{idA}")
+    public ResponseEntity<?> addRole(@RequestBody List<Role> roles, @PathVariable("idA") int idA) {
         try {
-            Account accountAddRole = accountService.getById(account.getId());
+            Account accountAddRole = accountService.getById(idA);
             if (accountAddRole == null) {
-                return ResponseEntity.badRequest().body(account.getId() + " not found!!");
+                return ResponseEntity.badRequest().body(idA + " not found!!");
             }
-            Role role = roleService.getById(idRole);
-            if (role == null) {
-                return ResponseEntity.badRequest().body(account.getId() + " not found!!");
+            for (Role role:roles) {
+                Role roleC = roleService.getById(role.getId());
+                if (roleC == null){
+                    return ResponseEntity.badRequest().body("not found  for role id: " + role.getId());
+                }
+                accountService.addRoleToAccount(accountAddRole, role);
             }
-            return ResponseEntity.ok().body(accountService.addRoleToAccount(accountAddRole, role));
+            return ResponseEntity.ok().body(accountService.getById(idA));
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
     }
 
-    @PostMapping("/removeRoleToAccount/{idRole}")
-    public ResponseEntity<?> removeRole(@RequestBody Account account, @PathVariable("idRole") int idRole) {
+    @PostMapping("/removeRoleToAccount/{idA}")
+    public ResponseEntity<?> removeRole(@RequestBody List<Role> roles, @PathVariable("idA") int idA) {
         try {
-            Account accountAddRole = accountService.getById(account.getId());
+            Account accountAddRole = accountService.getById(idA);
             if (accountAddRole == null) {
-                return ResponseEntity.badRequest().body(account.getId() + " not found!!");
+                return ResponseEntity.badRequest().body(idA + " not found!!");
             }
-            Role role = roleService.getById(idRole);
-            if (role == null) {
-                return ResponseEntity.badRequest().body(account.getId() + " not found!!");
+            for (Role role:roles) {
+                Role roleC = roleService.getById(role.getId());
+                if (roleC == null){
+                    return ResponseEntity.badRequest().body("not found  for role id: " + role.getId());
+                }
+                accountService.removeRoleFromAccount(accountAddRole, role);
             }
-            return ResponseEntity.ok().body(accountService.removeRoleFromAccount(accountAddRole, role));
+            return ResponseEntity.ok().body(accountService.getById(idA));
         } catch (Exception exception) {
             return ResponseEntity.badRequest().body("There is an exception when execute !! --> " + exception);
         }
