@@ -18,6 +18,9 @@ public class BrandController {
     @PostMapping("/saveOrUpdate")
     public ResponseEntity<?> saveOrUpdate(@RequestBody Brand brand) {
         try {
+            if (brand.getId() != 0){
+                return ResponseEntity.ok().body(brandService.saveOrUpdate(brand));
+            }
             if (brandService.getByName(brand.getName()) != null) {
                 return ResponseEntity.ok().body(brand.getName() + " is ready in database!!");
             }
